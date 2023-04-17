@@ -1,2 +1,4 @@
-# python-selenium-automation
-Test Automation with Python and Selenium, https://www.careerist.com/automation
+# Careerist Test Automation repository
+written in
+### Python 3, Behave
+https://www.careerist.com/automation
