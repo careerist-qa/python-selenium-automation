@@ -17,35 +17,35 @@ driver.get('https://www.amazon.com/')
 # to click sign in page from amazon.com
 mySignIn=driver.find_element(By.ID,'nav-link-accountList-nav-line-1')
 #wait for 5 seconds for see the cursor moving
-sleep(5)
+sleep(2)
 
 mySignIn.click()
-sleep(5)
+sleep(2)
 #move cursor over amazon logo
 driver.find_element(By.XPATH,"//i[@class='a-icon a-icon-logo']")
-sleep(5)
+sleep(2)
 #move cursor over te mobile or email text box
 myEmailText=driver.find_element(By.ID,'ap_email')
 #put information bharathigajan@gmail.com in email text box
 myEmailText.send_keys('bharathigajan@gmail.com')
 #Need help
 driver.find_element(By.CLASS_NAME,'a-expander-prompt')
-sleep(5)
+sleep(2)
 #Forgot password
 driver.find_element(By.ID,'auth-fpp-link-bottom')
-sleep(5)
+sleep(2)
 #Other issues
 driver.find_element(By.ID,'ap-other-signin-issues-link')
-sleep(5)
+sleep(2)
 #condition of use
 driver.find_element(By.XPATH,"//a[contains(@href,notification_privacy_notice)]")
-sleep(5)
+sleep(1)
 #PRIVACY
 driver.find_element(By.XPATH,"//a[contains(@href,privacy)]")
-sleep(5)
+sleep(1)
 #Createyouramazonaccount
 driver.find_element(By.ID,'createAccountSubmit')
-sleep(5)
+sleep(1)
 
 #condition of use
 #$x("//a[@href='/gp/help/customer/display.html/ref=ap_signin_notification_condition_of_use?ie=UTF58&nodeId=508088']")
