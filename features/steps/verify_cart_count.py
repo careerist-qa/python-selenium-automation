@@ -20,9 +20,9 @@ def add_keyboard(context):
 @then("Verify added to cart")
 def verify_one_in_cart(context):
     expected_text = "1"
-    actual_text = context.driver.find_element(By.ID, "nav-cart-count").text()
-    assert expected_text == actual_text, "Error: Nothing was added to the cart"
-    
+    actual_text = context.driver.find_element(By.ID, "nav-cart-count").text
+    assert expected_text == actual_text, "Item was not added"
+
 
 
 
