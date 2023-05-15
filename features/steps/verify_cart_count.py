@@ -2,6 +2,10 @@ from selenium.webdriver.common.by import By
 from behave import given, when, then
 
 
+ADD_TO_CART_BTN = (By.ID, "add-to-cart-button")
+NUMBER_IN_CART = (By.ID, "nav-cart-count")
+
+
 @given("Go to keyboard item page")
 def nav_keyboard_page(context):
     context.driver.get("https://www.amazon.com/AmazonBasics-Matte-Keyboard-QWERTY-Layout"
@@ -14,13 +18,13 @@ def nav_keyboard_page(context):
 
 @when("Click add to cart button")
 def add_keyboard(context):
-    context.driver.find_element(By.ID, "add-to-cart-button").click()
+    context.driver.find_element(*ADD_TO_CART_BTN).click()
 
 
 @then("Verify added to cart")
 def verify_one_in_cart(context):
     expected_text = "1"
-    actual_text = context.driver.find_element(By.ID, "nav-cart-count").text
+    actual_text = context.driver.find_element(*NUMBER_IN_CART).text
     assert expected_text == actual_text, "Item was not added"
 
 
