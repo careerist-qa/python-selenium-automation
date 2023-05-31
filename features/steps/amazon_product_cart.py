@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from behave import given, when, then
 from time import sleep
+from selenium.webdriver.support import expected_conditions as EC
 #$$("a[href*='/Womens-Plus-SizeStretch-Jersey-Length-Leggings/dp/B01B3ITZS'][href*='keywords=activewear']")
 
 
@@ -26,18 +27,23 @@ def search_product(context,search_word):
     search_field=context.driver.find_element(*SEARCH_PRODUCT_FIELD)
     search_field.clear()
     search_field.send_keys(search_word)
+
     sleep(4)
 
 @when('Click the search icon')
 def click_search_icon(context):
+
     context.driver.find_element(*SEARCH_ICON_BUTTON).click()
-    sleep(4)
+
+
 
 @then('choose your product from result page')
 def choose_product_result(context):
     all_products = context.driver.find_elements(*ALL_PRODUCTS)
+#    context.driver.wait.until(EC.element_to_be_selected(all_products[0]))
+    #context.driver.wait.until(EC.visibility_of(all_products))
     all_products[0].click()
-    sleep(5)
+
 
 
 
@@ -45,11 +51,12 @@ def choose_product_result(context):
 
 def click_add_to_cart(context):
     context.driver.find_element(*ADD_TO_CART).click()
-    sleep(4)
+
 
 @then('confirm that selected product in the cart')
 
 def confirm_select_product_cart(context):
     context.driver.find_element(*PRODUCT_IN_CART).click()
-    sleep(4)
+
+
 
