@@ -10,7 +10,7 @@ BEST_SELLER_LINK = (By.CSS_SELECTOR, 'div._p13n-zg-nav-tab-all_style_zg-tabs__EY
 @given( 'Open Amazon Bestseller page')
 def open_amazon_best_seller(context):
     context.driver.get('https://www.amazon.com/gp/bestsellers/?ref_=nav_cs_bestsellers')
-    sleep(10)
+    sleep(60)
 @then('Confirm {link_count} links exist')
 def confirm_links_exist(context, link_count):
     all_links_count = len(context.driver.find_elements(*BEST_SELLER_LINK))

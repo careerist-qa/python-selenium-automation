@@ -17,6 +17,7 @@ def open_google(context):
 def click_each_product(context):
     # collection of all the pant product in product_list
     product_list=context.driver.find_elements(*COLLECTION_OF_PRODUCT_COLORS)
+
     #for loop for iterating product list elements(each product)
     for product in product_list:
         product.click()
