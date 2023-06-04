@@ -1,11 +1,11 @@
 # Created by svetlanalevinsohn at 5/6/23
 Feature: Amazon Search tests
 
-#  Scenario: User can search for table on Amazon
-#    Given Open amazon main page
-#    When Search for table
-#    Then Verify search results shown for "table"
-#
+  Scenario: User can search for table on Amazon
+    Given Open amazon main page
+    When Search for table
+    Then Verify search results shown for "table"
+
 #  Scenario: User can search for coffee on Amazon
 #    Given Open amazon main page
 #    When Search for coffee
@@ -31,3 +31,8 @@ Feature: Amazon Search tests
     And Open cart page
     Then Verify cart has 1 item(s)
     And Verify cart has correct product
+
+  Scenario: Verify that user can see product names and images
+    Given Open amazon main page
+    When Search for coffee
+    Then Verify that every product has a name and an image
