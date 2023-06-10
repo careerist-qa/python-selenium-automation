@@ -22,7 +22,7 @@ def click_add_to_cart(context):
 
 @when('Store product name')
 def get_product_name(context):
-    context.product_name = context.driver.find_element(*PRODUCT_NAME).text
+    context.product_name = context.app.product_page.get_product_name()
     print(f'Current product: {context.product_name}')
 
 
