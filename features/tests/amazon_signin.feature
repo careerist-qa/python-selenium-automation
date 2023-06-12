@@ -4,5 +4,5 @@ Feature: Test Scenarios for Amazon SignIn functionality
     Given Open Amazon page
     When Click on returns and order icon
     Then Sign in page is opened
-    And Signin Header is visible
+    And signin Header is visible
     And Email field is exist

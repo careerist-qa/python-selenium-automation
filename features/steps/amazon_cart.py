@@ -14,21 +14,21 @@ CONFIRM_EMPTY_PAGE = (By.CSS_SELECTOR,"div.a-row.sc-your-amazon-cart-is-empty")
 
 @given('Click Amazon page')
 def open_Amazon(context):
-    context.driver.get('https://www.amazon.com/')
-
+    #context.driver.get('https://www.amazon.com/')
+    context.app.main_page.open_main_page()
 
 @when('Click on cart icon')
 def click_cart(context ):
-    order_button=context.driver.find_element(*CLICK_CART)
-    context.driver.wait.until(EC.element_to_be_clickable(order_button))
-    order_button.click()
-
+    # order_button=context.driver.find_element(*CLICK_CART)
+    # context.driver.wait.until(EC.element_to_be_clickable(order_button))
+    # order_button.click()
+    context.app.main_page.wait_for_element_click(*CLICK_CART)
 
 @then('Amazon Empty Cart Page is opened')
 def verify_amazon_empty_page_open(context):
-   context.driver.find_element(*CONFIRM_EMPTY_PAGE)
+   #context.driver.find_element(*CONFIRM_EMPTY_PAGE)
     #context.driver.wait.until(EC.new_window_is_opened(amazon_empty_cart_open))
-
+       context.app.main_page.wait_for_element_appear(*CONFIRM_EMPTY_PAGE)
 
 
 

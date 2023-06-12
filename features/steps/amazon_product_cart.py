@@ -20,43 +20,46 @@ PRODUCT_SIZE = (By.CSS_SELECTOR, "input[aria-labelledby='size_name_1-announce']"
 
 @given('Enter Amazon page')
 def open_google(context):
-    context.driver.get('https://www.amazon.com/')
-
+    #context.driver.get('https://www.amazon.com/')
+    context.app.main_page.open_main_page()
 @when('Enter  product {search_word} in search field')
 def search_product(context,search_word):
-    search_field=context.driver.find_element(*SEARCH_PRODUCT_FIELD)
-    search_field.clear()
-    search_field.send_keys(search_word)
+    # search_field=context.driver.find_element(*SEARCH_PRODUCT_FIELD)
+    # search_field.clear()
+    # search_field.send_keys(search_word)
+    context.app.main_page.input_text(search_word,*SEARCH_PRODUCT_FIELD)
 
     sleep(4)
 
 @when('Click the search icon')
 def click_search_icon(context):
 
-    context.driver.find_element(*SEARCH_ICON_BUTTON).click()
-
+    #context.driver.find_element(*SEARCH_ICON_BUTTON).click()
+    context.app.main_page.click(*SEARCH_ICON_BUTTON)
 
 
 @then('choose your product from result page')
 def choose_product_result(context):
-    all_products = context.driver.find_elements(*ALL_PRODUCTS)
-#    context.driver.wait.until(EC.element_to_be_selected(all_products[0]))
-    #context.driver.wait.until(EC.visibility_of(all_products))
-    all_products[0].click()
-
+    #all_products = context.driver.find_elements(*ALL_PRODUCTS)
+    #context.driver.wait.until(EC.element_to_be_selected(all_products[0]))
+     #context.driver.wait.until(EC.visibility_of(all_products))
+    # all_products[0].click()
+    allproducts=context.app.main_page.find_elements(*ALL_PRODUCTS)
+    allproducts[1].click()
 
 
 
 @then('click add to cart button')
 
 def click_add_to_cart(context):
-    context.driver.find_element(*ADD_TO_CART).click()
-
+    #context.driver.find_element(*ADD_TO_CART).click()
+    context.app.main_page.click(*ADD_TO_CART)
 
 @then('confirm that selected product in the cart')
 
 def confirm_select_product_cart(context):
-    context.driver.find_element(*PRODUCT_IN_CART).click()
-
+    #context.driver.find_element(*PRODUCT_IN_CART).click()
+    context.app.main_page.find_element(*PRODUCT_IN_CART)
+    context.app.main_page.click(*PRODUCT_IN_CART)
 
 
