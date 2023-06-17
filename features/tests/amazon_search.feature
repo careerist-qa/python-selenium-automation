@@ -1,6 +1,7 @@
 # Created by svetlanalevinsohn at 5/6/23
 Feature: Amazon Search tests
 
+  @smoke
   Scenario: User can search for table on Amazon
     Given Open amazon main page
     When Search for table
@@ -36,3 +37,9 @@ Feature: Amazon Search tests
     Given Open amazon main page
     When Search for coffee
     Then Verify that every product has a name and an image
+
+  Scenario: Verify that user can search in a department
+    Given Open amazon main page
+    When Select department books
+    When Search for Faust
+    Then Verify correct department shown
