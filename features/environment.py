@@ -86,6 +86,5 @@ def after_step(context, step):
 
 
 def after_scenario(context, feature):
-    # allure.attach(attachment_type=AttachmentType.TEXT, 'url')
     context.driver.delete_all_cookies()
     context.driver.quit()
