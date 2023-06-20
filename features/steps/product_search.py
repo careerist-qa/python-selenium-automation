@@ -1,6 +1,8 @@
 from selenium.webdriver.common.by import By
 from behave import given, when, then
 from time import sleep
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 SEARCH_INPUT = (By.NAME, 'q')
