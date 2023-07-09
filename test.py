@@ -28,6 +28,7 @@
 # text = driver.find_element(By.ID, "attach-accessory-cart-total-string").text
 # print(text)
 
+def unique_char(word):
 
 
 

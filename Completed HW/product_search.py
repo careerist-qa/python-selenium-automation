@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from behave import given, when, then
 from time import sleep
 
+from selenium.webdriver.support.wait import WebDriverWait
 
 SEARCH_INPUT = (By.NAME, 'q')
 SEARCH_SUBMIT = (By.NAME, 'btnK')
@@ -17,6 +18,8 @@ def input_search(context, search_word):
     search = context.driver.find_element(*SEARCH_INPUT)
     search.clear()
     search.send_keys(search_word)
+    context.driver.wait = WebDriverWait(context.driver, 5)
+
     sleep(4)
 
 
