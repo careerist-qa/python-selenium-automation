@@ -10,6 +10,7 @@ SEARCH_BTN = (By.ID, 'nav-search-submit-button')
 FOOTER_LINKS = (By.CSS_SELECTOR, ".navFooterMoreOnAmazon a")
 POPUP_SIGNIN_BTN = (By.CSS_SELECTOR, "#nav-signin-tooltip .nav-action-signin-button")
 
+
 @given('Open amazon main page')
 def open_amazon(context):
     context.driver.get('https://www.amazon.com/')
