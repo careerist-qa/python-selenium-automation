@@ -17,7 +17,7 @@ driver.find_element(By.ID, 'twotabsearchtextbox').send_keys('table')
 # Click on search btn
 driver.find_element(By.ID, 'nav-search-submit-button').click()
 
-expected_result = 'Sign in'
+expected_result = '"table"'
 actual_result = driver.find_element(By.XPATH, "//span[@class='a-color-state a-text-bold']").text
 
 assert expected_result == actual_result, f'Expected {expected_result} did not match actual {actual_result}'
