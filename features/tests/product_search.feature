@@ -5,3 +5,4 @@ Feature: Test Scenarios for Search functionality
     When Input Car into search field
     And Click on search icon
     Then Product results for Car are shown
+

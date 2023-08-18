@@ -25,7 +25,7 @@ driver.find_element(By.CSS_SELECTOR, "[name='email']" )
 driver.find_element(By.CSS_SELECTOR, "[name='password']")
 
 #password must be at least 6 characters
-driver.find_element(By.CSS_SELECTOR, '.a-alert-content[data-text='Passwords must be at least 6 characters'])
+driver.find_element(By.CSS_SELECTOR, '.auth-inline-information-message div.a-alert-content.')
 
 # re-enter password
 driver.find_element(By.CSS_SELECTOR, "[name='passwordCheck']")

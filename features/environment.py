@@ -2,16 +2,13 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
 
-
 def browser_init(context):
     """
     :param context: Behave context
     """
-
-    service = Service(executable_path='/Users/ilenismosquea/Desktop/HelloWorld/QA/python-selenium-automation/chromedriver')
+    # driver_path = ChromeDriverManager().install()
+    service = Service(executable_path='/Users/ilenismosquea/QA/python-selenium-automation/chromedriver')
     context.driver = webdriver.Chrome(service=service)
-
-    context.driver.maximize_window()
 
     context.driver.maximize_window()
     context.driver.implicitly_wait(4)
