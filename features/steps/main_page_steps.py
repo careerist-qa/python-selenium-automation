@@ -12,6 +12,11 @@ def open_amazon(context):
     context.driver.get('https://www.amazon.com/')
 
 
+@given('Open Amazon BestSeller page')
+def open_amazon_bestseller(context):
+    context.driver.get('https://www.amazon.com/gp/bestsellers/?ref_=nav_cs_bestsellers')
+
+
 @when('Search for {product}')
 def search_on_amazon(context, product):
     context.driver.find_element(*SEARCH_FIELD).send_keys(product)
@@ -22,6 +27,7 @@ def search_on_amazon(context, product):
 def click_orders(context):
     context.driver.find_element(*ORDERS_BTN).click()
 
+
 @when('Click on the cart icon')
 def click_on_the_cart_icon(context):
     context.driver.find_element(By.CSS_SELECTOR, '#nav-cart-count').click()
@@ -30,8 +36,6 @@ def click_on_the_cart_icon(context):
 @then('Verify that your cart is empty')
 def verify_that_your_cart_is_empty(context):
     context.driver.find_element(By.CSS_SELECTOR, '.a-row.sc-your-amazon-cart-is-empty')
-
-
 
 
 @then('Verify footer has {expected_amount} links')
