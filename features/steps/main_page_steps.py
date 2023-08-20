@@ -5,6 +5,7 @@ SEARCH_FIELD = (By.ID, 'twotabsearchtextbox')
 SEARCH_BTN = (By.ID, 'nav-search-submit-button')
 ORDERS_BTN = (By.ID, 'nav-orders')
 FOOTER_LINKS = (By.CSS_SELECTOR, '.navFooterDescItem')
+HEADER_lINKS = (By.CSS_SELECTOR, "#zg_header a")
 
 
 @given('Open Amazon page')
@@ -38,15 +39,20 @@ def verify_that_your_cart_is_empty(context):
     context.driver.find_element(By.CSS_SELECTOR, '.a-row.sc-your-amazon-cart-is-empty')
 
 
-@then('Verify footer has {expected_amount} links')
-def verify_link_amount(context, expected_amount):
-    expected_amount = int(expected_amount)
-    links = context.driver.find_elements(*FOOTER_LINKS)
-    assert len(links) == expected_amount, f'Expected {expected_amount} links but got {len(links)}'
-
-
 @then('Verify many links are shown in the footer')
 def verify_many_links(context):
     links = context.driver.find_elements(*FOOTER_LINKS)
     assert len(links) > 1, f'Expected at least 2 links, but got {len(links)}'
 
+
+@then('Verify many links are shown in the header')
+def verify_many_links_header(context):
+    links = context.driver.find_elements(*HEADER_lINKS)
+    assert len(links) > 1, f'Expected at least 2 links, but got {len(links)}'
+
+
+@then('Verify footer has {expected_amount} links')
+def verify_link_amount(context, expected_amount):
+    expected_amount = int(expected_amount)
+    links = context.driver.find_elements(*FOOTER_LINKS)
+    assert len(links) == expected_amount, f'Expected {expected_amount} links but got {len(links)}'

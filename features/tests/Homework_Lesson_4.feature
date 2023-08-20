@@ -3,4 +3,4 @@ Feature: test scenarios for functional on BestSeller Page
 
   Scenario: User can browse the Bestseller page
     Given Open Amazon BestSeller page
-    When
+    Then Verify many links are shown in the header
