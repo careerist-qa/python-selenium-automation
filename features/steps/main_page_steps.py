@@ -1,6 +1,7 @@
 from behave import given, when, then
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
 
 
 SEARCH_FIELD = (By.ID, 'twotabsearchtextbox')
@@ -23,15 +24,35 @@ def search_on_amazon(context, product):
 
 @when('Click Orders')
 def click_orders(context):
-    context.driver.find_element(*ORDERS_BTN).click()
+    context.app.header.click_orders()
 
 
 @when('Click on button from SignIn popup')
 def click_signin_from_popup(context):
-    context.driver.wait.until(
-        EC.element_to_be_clickable(SIGNIN_BTN),
-        message='SignIn btn from popup not clickable'
-    ).click()
+    # context.driver.wait.until(
+    #     EC.element_to_be_clickable(SIGNIN_BTN),
+    #     message='SignIn btn from popup not clickable'
+    # ).click()
+    context.app.header.click_signin_from_popup()
+
+
+@when('Wait for 3 sec')
+def wait_sec(context):
+    sleep(3)
+
+
+@then('Verify Sign In is clickable')
+def verify_signin_btn_clickable(context):
+    # context.driver.wait.until(
+    #     EC.element_to_be_clickable(SIGNIN_BTN),
+    #     message='SignIn btn from popup not clickable'
+    # )
+    context.app.header.verify_signin_btn_clickable()
+
+
+@then('Verify Sign In disappears')
+def verify_signin_btn_disappears(context):
+    context.app.header.verify_signin_btn_disappears()
 
 
 @then('Verify footer has {expected_amount} links')
