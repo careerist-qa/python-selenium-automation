@@ -14,6 +14,7 @@ VERIFY_CART_AMOUNT = (By.CSS_SELECTOR, '.a-dropdown-prompt')
 @given('Open Amazon product {product_id} page')
 def open_amazon_product(context, product_id):
     context.driver.get(f'https://www.amazon.com/dp/{product_id}/')
+    sleep(2)
     context.driver.refresh()
 
 
