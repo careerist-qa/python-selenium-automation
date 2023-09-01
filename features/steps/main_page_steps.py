@@ -1,5 +1,6 @@
 from behave import given, when, then
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 
 SEARCH_FIELD = (By.ID, 'twotabsearchtextbox')
@@ -12,9 +13,9 @@ SIGNIN_BTN = (By.CSS_SELECTOR, '#nav-signin-tooltip .nav-action-signin-button')
 
 @given('Open Amazon page')
 def open_amazon(context):
-    context.driver.get('https://www.amazon.com/')
-    sleep(2)
+    context.app.main_page.open_main()
     context.driver.refresh()
+
 
 @given('Open Amazon BestSeller page')
 def open_amazon_bestseller(context):
@@ -23,13 +24,12 @@ def open_amazon_bestseller(context):
 
 @when('Search for {product}')
 def search_on_amazon(context, product):
-    context.driver.find_element(*SEARCH_FIELD).send_keys(product)
-    context.driver.find_element(*SEARCH_BTN).click()
+    context.app.header.search_product(product)
 
 
-@when('Click Orders')
-def click_orders(context):
-    context.driver.find_element(*ORDERS_BTN).click()
+@when('Click Amazon Orders')
+def click_amazon_orders(context):
+    context.app.header.click_amazon_orders()
 
 
 @when('Click on the cart icon')
