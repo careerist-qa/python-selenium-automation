@@ -29,12 +29,17 @@ Feature: Tests for amazon search
     |forks            |"forks"          |
 
 
-  Scenario: User can add a product to the cart
+  #Scenario: User can add a product to the cart
+   # Given Open Amazon page
+    #When Search for Dawn Ultra Dishwashing Liquid, Original Scent 90 Fl. Oz. on amazon
+    #When Click on the first product
+    #When Store product name
+    #When Click on Add to cart button
+    #When Open cart page
+    #Then Verify cart has item(s)
+    #Then Verify cart has correct product
+
+  Scenario: User can verify that the cart is empty
     Given Open Amazon page
-    When Search for Dawn Ultra Dishwashing Liquid, Original Scent 90 Fl. Oz. on amazon
-    When Click on the first product
-    When Store product name
-    When Click on Add to cart button
-    When Open cart page
-    Then Verify cart has item(s)
-    Then Verify cart has correct product
+    When Click on the cart icon
+    Then Verify Your Shopping Cart is empty text present

@@ -7,6 +7,6 @@ class SignInPage(Page):
     EMAIL_INPUT = (By.ID, 'ap_email')
 
     def verify_signin_opened(self):
-        actual_text = self.driver.find_element(*self.SIGNIN_HEADER).text
-        assert actual_text == 'Sign in', f'Expected Sign in but got {actual_text}'
+        self.verify_text('Sign in', *self.SIGNIN_HEADER)
         self.driver.find_element(*self.EMAIL_INPUT)
+        self.verify_partial_url('ap/signin')

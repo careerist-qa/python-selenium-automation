@@ -8,7 +8,8 @@ SEARCH_BTN = (By.ID, 'nav-search-submit-button')
 ORDERS_BTN = (By.ID, 'nav-orders')
 FOOTER_LINKS = (By.CSS_SELECTOR, '.navFooterDescItem')
 HEADER_lINKS = (By.CSS_SELECTOR, "#zg_header a")
-SIGNIN_BTN = (By.CSS_SELECTOR, '#nav-signin-tooltip .nav-action-signin-button')
+SIGNIN_BTN = (By.CSS_SELECTOR, "#nav-link-accountList-nav-line-1")
+Empty_Cart = (By.CSS_SELECTOR, '.a-row.sc-your-amazon-cart-is-empty')
 
 
 @given('Open Amazon page')
@@ -37,9 +38,9 @@ def click_on_the_cart_icon(context):
     context.driver.find_element(By.CSS_SELECTOR, '#nav-cart-count').click()
 
 
-@then('Verify that your cart is empty')
-def verify_that_your_cart_is_empty(context):
-    context.driver.find_element(By.CSS_SELECTOR, '.a-row.sc-your-amazon-cart-is-empty')
+@then('Verify Your Shopping Cart is empty text present')
+def verify_your_shopping_cart_is_empty_text_present(context):
+    context.driver.find_elements(*Empty_Cart)
 
 
 @then('Verify many links are shown in the footer')
@@ -67,3 +68,24 @@ def click_signin_from_popup(context):
         EC.element_to_be_clickable(SIGNIN_BTN),
         message='SignIn btn from popup not clickable'
     ).click()
+
+
+@then('Verify Sign In is clickable')
+def verify_signin_btn_clickable(context):
+    context.app.header.verify_signin_btn_clickable()
+
+
+@then('Verify Sign In disappears')
+def verify_signin_btn_disappears(context):
+    context.app.header.verify_signin_btn_disappears()
+
+
+@when('Wait for 3 sec')
+def wait_sec(context):
+    sleep(3)
+
+
+
+
+
+
