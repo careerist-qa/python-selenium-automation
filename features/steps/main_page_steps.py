@@ -41,6 +41,11 @@ def wait_sec(context):
     sleep(3)
 
 
+@when('Hover over language options')
+def hover_lang(context):
+    context.app.header.hover_lang()
+
+
 @then('Verify Sign In is clickable')
 def verify_signin_btn_clickable(context):
     # context.driver.wait.until(
@@ -66,3 +71,8 @@ def verify_link_amount(context, expected_amount):
 def verify_many_links(context):
     links = context.driver.find_elements(*FOOTER_LINKS)
     assert len(links) > 1, f'Expected at least 2 links, but got {len(links)}'
+
+
+@then('Verify Spanish option present')
+def verify_spanish_lang(context):
+    context.app.header.verify_spanish_lang()
