@@ -27,3 +27,4 @@ def open_cart(context):
 def empty_cart_verify(context):
     actual_result = 'Amazon Cart is em'
     expected_result = context.driver.find_element(By.XPATH, "//*[contains(text(), ' Amazon Cart is em')]" )
+    assert actual_result == expected_result, f'expected assertion error {actual_result} should not equal {expected_result}'
