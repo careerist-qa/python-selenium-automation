@@ -18,3 +18,12 @@ def verify_sign_in(context):
     expected_result = 'Sign In'
     actual_result = context.driver.find_element(By.XPATH, "//h1[contains(text(), 'Sign in')]")
     assert expected_result == actual_result, f'Error expected {expected_result} did not match actual {actual_result}'
+
+@when('Click Cart')
+def open_cart(context):
+    context.driver.find_element(By.CSS_SELECTOR, "[class=nav-line-2][aria-hidden=true").click()
+
+@then('Verify cart is Empty')
+def empty_cart_verify(context):
+    actual_result = 'Amazon Cart is em'
+    expected_result = context.driver.find_element(By.XPATH, "//*[contains(text(), ' Amazon Cart is em')]" )

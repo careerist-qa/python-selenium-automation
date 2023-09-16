@@ -6,3 +6,8 @@ Feature: Check order page
     Given Open Amazon Page
     When Click Orders
     Then Verify Sign-in page is opened
+
+  Scenario: Open Cart and verify that cart is empty
+    Given Open Amazon page
+    When Click Cart
+    Then Verify cart is Empty
