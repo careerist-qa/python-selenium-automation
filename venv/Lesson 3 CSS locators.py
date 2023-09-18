@@ -1,0 +1,12 @@
+# CSS Selectors on create account page
+driver.find_element(By.CSS_SELECTOR, 'h1.a-spacing-small')
+driver.find_element(By.CSS_SELECTOR, 'i.a-icon.a-icon-logo')
+driver.find_element(By.CSS_SELECTOR, '#ap_customer_name')
+driver.find_element(By.CSS_SELECTOR, '#ap_email')
+driver.find_element(By.CSS_SELECTOR, '#ap_password')
+driver.find_element(By.CSS_SELECTOR, '#ap_password_check')
+driver.find_element(By.CSS_SELECTOR, 'i.a-icon.a-icon-alert')
+driver.find_element(By.CSS_SELECTOR, '#continue')
+driver.find_element(by.CSS_SELECTOR, 'a.a-link-emphasis')
+driver.find_element(By.XPATH, "//a[text()='Privacy Notice']")
+driver.find_element(By.XPATH, "//a[text()='Conditions of Use']")
