@@ -6,3 +6,12 @@ Feature: Open Best Sellers page and verify that it is correct
     When Open Hamburger Menu
     Then Open Best Sellers Page
     Then Verify Bestsellers page is opened
+
+
+  Scenario: Add product to cart and verify product is added
+    Given Open Amazon page
+    When Search for <ball>
+    Then Verify search result is <ball>
+    Then Select Product
+    Then Add product to cart
+    Then Verify product is added to cart
