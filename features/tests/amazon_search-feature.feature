@@ -2,9 +2,14 @@
 Feature: Tests for amazon search
 
 
-  Scenario: Verify that a user can search for a table
+  Scenario Outline: Verify that a user can search for a product
     Given Open Amazon page
-    When Search for table
-    Then Verify search result is correct
+    When Search for <search_word>
+    Then Verify search result is <search_result>
+    Examples:
+    |search_word     |search_result    |
+    |cup             |"cup"            |
+    |dress           |"dress"          |
+    |table           |"table"          |
 
-  Scenario: open
+
