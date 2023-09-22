@@ -13,5 +13,7 @@ Feature: Open Best Sellers page and verify that it is correct
     When Search for <ball>
     Then Verify search result is <ball>
     Then Select Product
+    When Store product name
     Then Add product to cart
     Then Verify product is added to cart
+    Then Verify cart has correct product
