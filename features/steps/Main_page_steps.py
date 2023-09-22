@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from time import sleep
 
 FOOTER_LINKS = (By.CSS_SELECTOR, '.navFooterDescText')
+ORDERS = (By.XPATH, "//span[contains(text(), '& Orders')]")
 
 @given('Open Amazon page')
 def open_amazon(context):
@@ -12,7 +13,15 @@ def open_amazon(context):
 
 @when('Click Orders')
 def click_orders(context):
-    context.driver.find_element(By.XPATH, "//span[contains(text(), '& Orders')]").click()
+    context.driver.find_element(ORDERS).click()
+
+@when('Open Hamburger Menu')
+def open_side_menu(context):
+    context.driver.find_element(By.CSS_SELECTOR, 'i.hm-icon').click()
+
+@then('Open Best Sellers Page')
+def open_best_sellers_page(context):
+    context.driver.find_element(By.CSS_SELECTOR, '[href*="=nav_em_cs_bestsellers_0_1_1"]').click()
 
 
 @when('Search for {search_word}')
