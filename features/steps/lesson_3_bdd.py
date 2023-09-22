@@ -8,4 +8,4 @@ def click_returns_orders(context):
     context.driver.find_element(By.ID, "nav-orders").click()
 @then('Taken to Sign In page')
 def sign_in_page(context):
-    context.driver.find_element(By.ID, "ap-email")
+    context.driver.find_element(By.ID, "ap-email").click()
