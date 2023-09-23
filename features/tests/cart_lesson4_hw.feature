@@ -9,4 +9,3 @@ Feature: User verifies something was added to their cart
   Then Goes to items page
   Then Adds the Item to Cart
   Then Checks their cart
-    # Enter steps here
