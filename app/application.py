@@ -7,5 +7,3 @@ class Application:
         self.signin_page = SigninPage(driver)
 
 
-        app = Application()
-        app.main_page.open_main()
