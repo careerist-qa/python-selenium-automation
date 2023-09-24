@@ -11,8 +11,23 @@ def browser_init(context):
     :param context: Behave context
     """
 
+    # service = Service(executable_path='/Users/ilenismosquea/QA/python-selenium-automation/chromedriver')
+    # context.driver = webdriver.Chrome(service=service)
+
+    # service = Service(executable_path='/Users/ilenismosquea/QA/python-selenium-automation/geckodriver')
+    # context.driver = webdriver.Firefox(service=service)
+
+    # context.driver = webdriver.Safari()
+
+    ### HEADLESS MODE ####
+
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
     service = Service(executable_path='/Users/ilenismosquea/QA/python-selenium-automation/chromedriver')
-    context.driver = webdriver.Chrome(service=service)
+    context.driver = webdriver.Chrome(
+        options=options,
+        service=service
+     )
 
     context.driver.maximize_window()
     context.driver.implicitly_wait(4)
