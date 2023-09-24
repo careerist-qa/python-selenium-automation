@@ -14,7 +14,7 @@ bingo(100)
 def sum_numbers(n: int):
     final_sum = 0
     for i in range(1, n + 1):
-        final_sum = final_sum+ i
+        final_sum = final_sum + i
     print(f'The sum of digits 1 to {n} is {final_sum}')
 
 sum_numbers(8)
