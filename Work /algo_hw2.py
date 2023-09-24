@@ -94,3 +94,4 @@ input_str2 = "grable"
 result2 = shortcut(input_str2)
 print(result2)
 
+
