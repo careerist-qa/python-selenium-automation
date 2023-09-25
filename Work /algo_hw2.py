@@ -90,6 +90,7 @@ input_str1 = "jacob"
 result1 = shortcut(input_str1)
 print(result1)
 
+
 input_str2 = "grable"
 result2 = shortcut(input_str2)
 print(result2)
