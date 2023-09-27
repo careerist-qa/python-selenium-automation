@@ -12,9 +12,11 @@ SIGNIN_BTTN = (By.CSS_SELECTOR, '#nav-signin-tooltip .nav-action-signin-button')
 SEARCH_FIELD = (By.ID, 'twotabsearchtextbox')
 SEARCH_BTTN = (By.ID, 'nav-search-submit-button')
 
+
 @given('Open Amazon page')
 def open_amazon(context):
-    context.driver.get('https://amazon.com')
+    # context.driver.get('https://amazon.com')
+    context.app.main_page.open_main()
     context.driver.refresh()
 
 @when('Click Orders')
@@ -30,10 +32,9 @@ def open_best_sellers_page(context):
     context.driver.find_element(By.CSS_SELECTOR, '[href*="=nav_em_cs_bestsellers_0_1_1"]').click()
 
 
-@when('Search for {search_word}')
-def search_on_amazon(context, search_word):
-    context.driver.find_element(*SEARCH_FIELD).send_keys(search_word)
-    context.driver.find_element(*SEARCH_BTTN).click()
+@when('Search for {product}')
+def search_on_amazon(context, product):
+    context.app.header.search_product(product)
 
 @then('Verify footer has {expected_amount} links')
 def verify_link_amount(context, expected_amount):
