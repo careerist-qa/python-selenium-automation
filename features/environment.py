@@ -9,11 +9,28 @@ def browser_init(context):
     """
     :param context: Behave context
     """
-    driver_path = ChromeDriverManager().install()
-    service = Service(driver_path)
-    context.driver = webdriver.Chrome(service=service)
+    #driver_path = ChromeDriverManager().install()
+    #service = Service(driver_path)
+    #context.driver = webdriver.Chrome(service=service)
+    #service = Service(executable_path= "/Users/jacobgrable/QA/python-selenium-automation/geckodriver")
+    #context.driver = webdriver.Firefox(service=service)
+    context.driver = webdriver.Safari()
 
-    context.driver.maximize_window()
+    ### BROWSERSTACK ###
+     #Register for BrowserStack, then grab it from https://www.browserstack.com/accounts/settings
+    bs_user = 'jacobgrable_02vm1G'
+    bs_key = 'qcMffBqrPwXHx1H7JwoH'
+    url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
+
+    options = Options()
+    bstack_options = {
+         'os': 'MacOS',
+         'osVersion': '13.4.1',
+         'browserName': 'Safari',
+         'sessionName': scenario_name
+     }
+    options.set_capability('bstack:options', bstack_options)
+    context.driver = webdriver.Remote(command_executor=url, options=options)
 
     context.driver.maximize_window()
     context.driver.implicitly_wait(4)

@@ -3,6 +3,7 @@ from pages.signin_page import SigninPage
 from pages.header import Header
 from pages.base_page import Page
 from pages.cart_page import CartPage
+from pages.terms_condition_page import TermsConditionsPage
 
 class Application:
     def __init__(self, driver):
@@ -11,3 +12,4 @@ class Application:
         self.signin_page = SigninPage(driver)
         self.header = Header(driver)
         self.cart_page = CartPage(driver)
+        self.terms_condition_page = TermsConditionsPage(driver)
