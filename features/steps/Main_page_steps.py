@@ -9,7 +9,8 @@ from selenium.webdriver.support import expected_conditions as EC
 FOOTER_LINKS = (By.CSS_SELECTOR, '.navFooterDescText')
 ORDERS = (By.XPATH, "//span[contains(text(), '& Orders')]")
 SIGNIN_BTTN = (By.CSS_SELECTOR, '#nav-signin-tooltip .nav-action-signin-button')
-
+SEARCH_FIELD = (By.ID, 'twotabsearchtextbox')
+SEARCH_BTTN = (By.ID, 'nav-search-submit-button')
 
 @given('Open Amazon page')
 def open_amazon(context):
@@ -31,8 +32,8 @@ def open_best_sellers_page(context):
 
 @when('Search for {search_word}')
 def search_on_amazon(context, search_word):
-    context.driver.find_element(By.ID, 'twotabsearchtextbox').send_keys(search_word)
-    context.driver.find_element(By.ID, 'nav-search-submit-button').click()
+    context.driver.find_element(*SEARCH_FIELD).send_keys(search_word)
+    context.driver.find_element(*SEARCH_BTTN).click()
 
 @then('Verify footer has {expected_amount} links')
 def verify_link_amount(context, expected_amount):
