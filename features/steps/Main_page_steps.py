@@ -7,7 +7,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # variables
 FOOTER_LINKS = (By.CSS_SELECTOR, '.navFooterDescText')
-ORDERS = (By.XPATH, "//span[contains(text(), '& Orders')]")
 SIGNIN_BTTN = (By.CSS_SELECTOR, '#nav-signin-tooltip .nav-action-signin-button')
 SEARCH_FIELD = (By.ID, 'twotabsearchtextbox')
 SEARCH_BTTN = (By.ID, 'nav-search-submit-button')
@@ -19,10 +18,6 @@ def open_amazon(context):
     context.app.main_page.open_main()
     sleep(2)
     context.driver.refresh()
-
-@when('Click Orders')
-def click_orders(context):
-    context.driver.find_element(ORDERS).click()
 
 @when('Open Hamburger Menu')
 def open_side_menu(context):

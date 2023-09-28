@@ -12,3 +12,4 @@ class Page:
         e = self.driver.find_element(*locator)
         e.send_keys(text)
 
+

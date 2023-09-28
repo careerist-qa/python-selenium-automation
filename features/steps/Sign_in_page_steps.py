@@ -5,6 +5,4 @@ from time import sleep
 
 @then('Verify Sign-in page is opened')
 def verify_sign_in(context):
-    expected_result = 'Sign In'
-    actual_result = context.driver.find_element(By.XPATH, "//h1[contains(text(), 'Sign in')]")
-    assert expected_result == actual_result, f'Error expected {expected_result} did not match actual {actual_result}'
+    context.app.sign_in_page.verify_sign_in()
