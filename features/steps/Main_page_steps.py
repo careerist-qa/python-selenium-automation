@@ -17,6 +17,7 @@ SEARCH_BTTN = (By.ID, 'nav-search-submit-button')
 def open_amazon(context):
     # context.driver.get('https://amazon.com')
     context.app.main_page.open_main()
+    sleep(2)
     context.driver.refresh()
 
 @when('Click Orders')

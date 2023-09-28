@@ -3,7 +3,7 @@ Feature: Tests for amazon search
   Scenario: Verify that a user can search for a dress
     Given Open Amazon page
     When Search for dress
-    Then Verify search result is 'dress'
+    Then Verify search result is "dress"
 #
 #  Scenario Outline: Verify that a user can search for a product
 #    Given Open Amazon page
