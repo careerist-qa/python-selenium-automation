@@ -3,6 +3,8 @@ from selenium.webdriver.common.by import By
 from time import sleep
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from pages.base_page import Page
+
 
 
 # variables
@@ -43,3 +45,17 @@ def verify_link_amount(context, expected_amount):
 @when('Click on button from Sign-In popup')
 def click_sign_in_popup(context):
     context.driver.wait.until(EC.element_to_be_clickable(SIGNIN_BTTN)).click()
+
+@when('Verify Sign-in is clickable')
+def verify_sign_in_btn_is_clickable(context):
+    # context.driver.wait.until(EC.element_to_be_clickable(SIGNIN_BTTN),
+    #  message= 'Sign in button not clickable')
+    context.app.header.wait_for_element_clickable(*SIGNIN_BTTN)
+
+@when('Wait for 3 seconds')
+def wait_sec(context):
+        sleep(3)
+
+@then('Verify Sign-in disappears')
+def verify_sign_in_btn_disappears(context):
+        context.app.header.wait_for_element_disappear(*SIGNIN_BTTN)
