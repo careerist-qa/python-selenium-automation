@@ -9,4 +9,4 @@ class SignInPage(Page):
        self.verify_text('Sign in', *self.SIGN_IN)
 
     def verify_partial_url(self,expected_part_of_url):
-        self.verify_partial_url()
+        self.verify_partial_text(expected_part_of_url)
