@@ -26,7 +26,8 @@ class Page:
     def wait_for_element_disappear(self, *locator):
         e = self.wait.until(EC.invisibility_of_element_located(locator) , message='Element did not disappear')
 
-
+    def store_value(self,*locator):
+        pass
 
     def verify_text(self, expected_text, *locator):
         actual_text = self.find_element(*locator).text
