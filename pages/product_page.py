@@ -12,7 +12,7 @@ class ProductPage(Page):
             self.driver.refresh()
 
     def product_name_get(self):
-        p = self.driver.find_element(*self.PRODUCT_NAME).text
+        p = self.driver.find_element(*self.PRODUCT_NAME).text[:30]
         print(f'Current product: {p}')
 
     def product_add_to_cart(self):

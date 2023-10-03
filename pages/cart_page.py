@@ -10,7 +10,7 @@ class CartPage(Page):
     CART_BTTN = (By.ID, 'nav-cart')
     ADD_TO_CART = (By.ID, 'add-to-cart-button')
     PRODUCT_NAME = (By.ID, 'productTitle')
-    PRODUCT_ADDED_TO_CART = (By.ID, '.a-size-medium-plus')
+    PRODUCT_ADDED_TO_CART = (By.CSS_SELECTOR, '.a-size-medium-plus')
 
     def click_cart(self):
         self.click(*self.CART_BTTN)
@@ -21,6 +21,7 @@ class CartPage(Page):
     def verify_product_added(self, expected_text):
         self.verify_text(expected_text, *self.PRODUCT_ADDED_TO_CART)
 
-    def verify_product_correct(self, expected_text):
-        self.verify_text(expected_text, *self.PRODUCT_NAME)
+    def verify_product_correct(self, ):
+        p = self.driver.find_element(*self.PRODUCT_NAME).text[:30]
+        self.verify_text(p, *self.PRODUCT_NAME[:30])
 

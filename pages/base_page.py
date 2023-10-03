@@ -17,17 +17,23 @@ class Page:
         e = self.driver.find_element(*locator)
         e.send_keys(text)
 
+    def store_value(self,*locator):
+        pass
+
+    def get_current_window(self):
+        return self.driver.current_window.handle
+
+    def get_original_windows(self):
+        return self.driver.window.handles
+
     def wait_for_element_clickable_click(self, *locator):
         e = self.wait.until(EC.element_to_be_clickable(locator),message = 'Element not clickable')
         e.click()
-
     def wait_for_element_clickable(self, *locator):
         e = self.wait.until(EC.element_to_be_clickable(locator),message='Element not clickable')
+
     def wait_for_element_disappear(self, *locator):
         e = self.wait.until(EC.invisibility_of_element_located(locator) , message='Element did not disappear')
-
-    def store_value(self,*locator):
-        pass
 
     def verify_text(self, expected_text, *locator):
         actual_text = self.find_element(*locator).text

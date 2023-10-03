@@ -28,6 +28,8 @@ def open_side_menu(context):
 @then('Open Best Sellers Page')
 def open_best_sellers_page(context):
     context.driver.find_element(By.CSS_SELECTOR, '[href*="=nav_em_cs_bestsellers_0_1_1"]').click()
+    sleep(2)
+    context.driver.refresh()
 
 
 @when('Search for {product}')

@@ -21,5 +21,5 @@ Feature: Lesson 7 implement waits
     Then Select Product
     When Store product name
     Then Add product to cart
-    Then Verify product is "Added to Cart"
+    Then Verify product is Added to Cart
     Then Verify cart has correct product
