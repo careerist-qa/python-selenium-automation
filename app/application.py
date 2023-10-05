@@ -6,6 +6,9 @@ from pages.base_page import Page
 from pages.cart_page import CartPage
 from pages.bestsellers_page import BestsellersPage
 from pages.product_page import ProductPage
+from pages.not_found_page import NotFoundPage
+from pages.blog import Blog
+
 
 
 
@@ -19,4 +22,6 @@ class Application:
         self.cart_page = CartPage(driver)
         self.bestsellers_page = BestsellersPage(driver)
         self.product_page = ProductPage(driver)
+        self.not_found_page = NotFoundPage(driver)
+        self.blog = Blog(driver)
 

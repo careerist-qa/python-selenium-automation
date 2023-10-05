@@ -7,7 +7,7 @@ class ProductPage(Page):
     PRODUCT_NAME = (By.ID, 'productTitle')
 
     def open_product(self,*product_id):
-            self.driver.get(f'https://www.amazon.com/dp/{self.product_id}/')
+            self.driver.get(f'https://www.amazon.com/dp/{product_id}/')
             sleep(2)
             self.driver.refresh()
 

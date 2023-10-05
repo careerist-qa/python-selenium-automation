@@ -21,10 +21,25 @@ class Page:
         pass
 
     def get_current_window(self):
-        return self.driver.current_window.handle
+        return self.driver.current_window_handle
 
     def get_original_windows(self):
-        return self.driver.window.handles
+        return self.driver.window_handles
+
+    def switch_to_a_new_window(self):
+        self.wait.until(EC.new_window_is_opened)
+        all_windows = self.driver.window_handles
+        print(all_windows)
+        print(f'Swithcing to {all_windows[1]}')
+        self.driver.switch_to.window(all_windows[1])
+
+    def close_page(self):
+        self.driver.close()
+
+    def switch_to_window(self,window_id):
+        self.driver.switch_to.window(window_id)
+
+
 
     def wait_for_element_clickable_click(self, *locator):
         e = self.wait.until(EC.element_to_be_clickable(locator),message = 'Element not clickable')
