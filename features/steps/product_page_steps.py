@@ -17,9 +17,11 @@ def add_product_to_cart(context):
     context.app.product_page.product_add_to_cart()
 
 
+
 @when("Store Product Name")
 def get_product_name(context):
-    context.app.product_page.product_name_get()
+    PRODUCT_NAME_VALUE = context.app.cart_page.product_name_get()
+    print(context.app.cart_page.product_name_get())
 
 @then('Verify user can click through colors')
 def verify_can_click_colors(context):

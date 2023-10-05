@@ -16,8 +16,8 @@ Feature: Lesson 7 implement waits
 
   Scenario: Add product to cart and verify product is added
     Given Open Amazon page
-    When Search for ball
-    Then Verify search result is "ball"
+    When Search for tea
+    Then Verify search result is "tea"
     Then Select Product
     When Store product name
     Then Add product to cart

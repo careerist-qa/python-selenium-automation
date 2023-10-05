@@ -21,7 +21,15 @@ class CartPage(Page):
     def verify_product_added(self, expected_text):
         self.verify_text(expected_text, *self.PRODUCT_ADDED_TO_CART)
 
-    def verify_product_correct(self, ):
+    def verify_product_correct(self):
         p = self.driver.find_element(*self.PRODUCT_NAME).text[:30]
         self.verify_text(p, *self.PRODUCT_NAME[:30])
+
+    def product_name_get(self):
+        p = self.driver.find_element(*self.PRODUCT_NAME).text[:30]
+        print(f'Current product: {p}')
+
+    def idk(self):
+        pass
+
 
