@@ -8,7 +8,7 @@ from pages.bestsellers_page import BestsellersPage
 from pages.product_page import ProductPage
 from pages.not_found_page import NotFoundPage
 from pages.blog import Blog
-
+from pages.terms_and_conditions_page import TermsAndConditionsPage
 
 
 
@@ -24,4 +24,5 @@ class Application:
         self.product_page = ProductPage(driver)
         self.not_found_page = NotFoundPage(driver)
         self.blog = Blog(driver)
+        self.terms_and_conditions_page = TermsAndConditionsPage(driver)
 
