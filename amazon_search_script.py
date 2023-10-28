@@ -14,6 +14,9 @@ driver.maximize_window()
 
 # open the url
 driver.get('https://www.amazon.com/')
+sleep(4)
+driver.refresh()
+sleep(4)
 # populate search:
 driver.find_element(By.ID, 'twotabsearchtextbox').send_keys('mug')
 # click on search icon:
