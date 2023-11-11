@@ -23,3 +23,12 @@ Feature: Search tests
     |tea              |tea                 |tea              |
     |mug              |mug                 |mug              |
     |christmas lights |christmas lights    |christmas+lights |
+
+  Scenario: User can add a product to cart
+    Given Open target main page
+    When Search for AirPods (3rd Generation)
+    And Click on Add to Cart button
+    And Store product name
+    And Open cart page
+    Then Verify cart has 1 item(s)
+    And Verify cart has correct product
