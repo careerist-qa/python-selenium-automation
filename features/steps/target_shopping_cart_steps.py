@@ -16,7 +16,12 @@ def click_on_cart(context):
 
 @then('Verify "Your cart is empty"')
 def verify_cart_empty(context):
+<<<<<<< HEAD
     expected = 'Your cart is empty'
     actual = context.driver.find_element(By.CSS_SELECTOR, ".lfA-Dem").text
     assert expected == actual, f'Expected {expected} is not equal to {actual}'
+=======
+    search_results_header = context.driver.find_element(By.CSS_SELECTOR, ".lfA-Dem").text
+    assert 'Your cart is empty' in search_results_header, f'Expected text Your cart is empty not in {search_results_header}'
+>>>>>>> 9ce209f (Homework)
     context.driver.quit()
