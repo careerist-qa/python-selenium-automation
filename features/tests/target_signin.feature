@@ -1,5 +1,4 @@
-# Created by peggyadams at 11/13/23
-<<<<<<< HEAD
+
 Feature: Target Sign-in Functiom
 
   Scenario: Verify User can Log-in
