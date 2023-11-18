@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from behave import given, when, then
 from time import sleep
 
@@ -27,6 +28,11 @@ def click_sign_in(context):
 @when('From right side navigation menu, click Sign In')
 def click_sign_in_from_nav(context):
     context.driver.find_element(*SIDE_MENU_SIGN_IN).click()
+
+
+@when('Click on Cart icon')
+def click_cart(context):
+    context.app.main_page.click_cart()
 
 
 @then('Verify header is present')
