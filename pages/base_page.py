@@ -63,15 +63,3 @@ class Page:
             EC.url_contains(expected_partial_url),
             message=f'Expected {expected_partial_url} not in url'
         )
-
-
-
-
-
-
-
-
-
-
-
-
