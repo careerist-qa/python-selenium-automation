@@ -1,6 +1,7 @@
 # Created by peggyadams at 11/15/23
-Feature: # Enter feature name here
-  # Enter feature description here
+Feature:Elements
 
-  Scenario: # Enter scenario name here
-    # Enter steps here
+  Scenario: Target Circle Page has 5 benefit box
+    Given Open test case page
+    When Click on Target Circle
+    Then Verify 5 benefits boxes

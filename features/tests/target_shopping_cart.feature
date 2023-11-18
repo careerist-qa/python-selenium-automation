@@ -6,7 +6,4 @@ Feature: Shopping Cart Functionality
     Given Open target main page
     When Click on Cart Icon
     Then Verify "Your cart is empty"
-<<<<<<< HEAD
-=======
 
->>>>>>> 9ce209f (Homework)

@@ -8,12 +8,3 @@ Feature: Target Sign-in Functiom
     When Click sign in on Navigation Menu
     Then Verify sign in formed open
 
-
-
-=======
-Feature: # Enter feature name here
-  # Enter feature description here
-
-  Scenario: # Enter scenario name here
-    # Enter steps here
->>>>>>> 9ce209f (Homework)
