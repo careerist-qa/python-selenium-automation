@@ -1,5 +1,4 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 from behave import given, when, then
 from time import sleep
 
@@ -33,6 +32,16 @@ def click_sign_in_from_nav(context):
 @when('Click on Cart icon')
 def click_cart(context):
     context.app.main_page.click_cart()
+
+
+@when('Hover over signin')
+def hover_signin(context):
+    context.app.main_page.hover_over_signin()
+
+
+@then('Verify signin arrow shown')
+def verify_arrow(context):
+    context.app.main_page.verify_signin_arrow_shown()
 
 
 @then('Verify header is present')
