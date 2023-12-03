@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
 from behave import given, when, then
-from time import sleep
 
 
 COLOR_OPTIONS = (By.CSS_SELECTOR, "[class*='ButtonWrapper'] img")
@@ -9,7 +8,6 @@ SELECTED_COLOR = (By.CSS_SELECTOR, "[class*='StyledVariationSelectorImage'] [cla
 @given('Open target product A-88345426 page')
 def open_target(context):
     context.driver.get('https://www.target.com/p/A-88345426')
-    sleep(6)
 
 
 @then('Verify user can click through colors')
