@@ -8,9 +8,9 @@ BENEFIT_BOXES = (By.CSS_SELECTOR, "li[class*='styles__BenefitCard']")
 SCROLL_SCRIPT = "document.querySelector('.styles__BenefitsHeading-sc-9mx6dj-0').scrollIntoView(true);"
 
 
-@given('Open Target Circle page')
-def open_circle_page(context):
-    context.driver.get('https://www.target.com/circle')
+@given('Open Circle page')
+def open_circle(context):
+    context.app.circle_page.open_circle()
 
 
 @then('Verify {number} benefit boxes on the Circle page')

@@ -5,6 +5,7 @@ from behave import given, when, then
 COLOR_OPTIONS = (By.CSS_SELECTOR, "[class*='ButtonWrapper'] img")
 SELECTED_COLOR = (By.CSS_SELECTOR, "[class*='StyledVariationSelectorImage'] [class*='CellVariationHeaderWrapper']")
 
+
 @given('Open target product A-88345426 page')
 def open_target(context):
     context.driver.get('https://www.target.com/p/A-88345426')
