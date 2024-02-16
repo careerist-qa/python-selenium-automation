@@ -8,6 +8,9 @@ ADD_TO_CART_BTN = (By.CSS_SELECTOR, "[id*='addToCartButton']")
 SIDE_NAV_PRODUCT_NAME = (By.CSS_SELECTOR, "h4[class*='StyledHeading']")
 SIDE_NAV_ADD_TO_CART_BTN = (By.CSS_SELECTOR, "[data-test='orderPickupButton']")
 SIDE_NAV_PREV_BUTTON = (By.CSS_SELECTOR, "button[aria-label='Previous']")
+LISTINGS = (By.CSS_SELECTOR, "[data-test='@web/site-top-of-funnel/ProductCardWrapper']")
+PRODUCT_TITLE = (By.CSS_SELECTOR, "[data-test='product-title']")
+PRODUCT_IMG = (By.CSS_SELECTOR, "[class*='ProductCardImage']")
 
 
 @when('Click on Add to Cart button')
@@ -31,7 +34,10 @@ def store_product_name(context):
 
 @when('Store product name to a list')
 def store_product_names(context):
-    context.wait.until(EC.presence_of_element_located(SIDE_NAV_PRODUCT_NAME), message='Side nav did not open')
+    TARGET_HELP_H2 = (By.XPATH, '')
+    context.wait.until(
+        EC.text_to_be_present_in_element(TARGET_HELP_H2,'Target Help'),
+        message="'Target Help' text did not appear")
     current_product_name = context.driver.find_element(*SIDE_NAV_PRODUCT_NAME).text
     try:  # try to add a product to context.product_names:
         context.product_names.append(current_product_name)
@@ -52,12 +58,26 @@ def side_nav_click_add_to_cart(context):
 
 @then('Search results for {expected_result} are shown')
 def verify_search_results_correct(context, expected_result):
-    actual_text = context.driver.find_element(*SEARCH_RESULTS_HEADER).text
-    assert expected_result in actual_text, f'Expected word {expected_result} not in {actual_text}'
+    context.app.search_results_page.verify_search_results_correct(expected_result)
 
 
 @then('Page URL has search term {expected_part_url}')
 def verify_search_results_page_url(context, expected_part_url):
-    url = context.driver.current_url
-    assert expected_part_url in url, f'Expected {expected_part_url} not in {url}'
+    context.app.search_results_page.verify_search_results_page_url(expected_part_url)
 
+
+@then('Verify that every product has a name and an image')
+def verify_products_name_img(context):
+    # To see ALL listings (comment out if you only check top ones):
+    context.driver.execute_script("window.scrollBy(0,2000)", "")
+    sleep(2)
+    context.driver.execute_script("window.scrollBy(0,2000)", "")
+
+    all_products = context.driver.find_elements(*LISTINGS)
+
+    for product in all_products:
+
+        title = product.find_element(*PRODUCT_TITLE).text
+        print(title)
+        assert title, 'Product title not shown'
+        product.find_element(*PRODUCT_IMG)
