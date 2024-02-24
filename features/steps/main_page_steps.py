@@ -22,6 +22,11 @@ def click_cart(context):
     context.app.header.click_cart_icon()
 
 
+@when('Hover over signin')
+def hover_signin_btn(context):
+    context.app.header.hover_signin_btn()
+
+
 @then('Verify header in shown')
 def verify_header(context):
     # header = context.driver.find_element(*HEADER)
@@ -34,3 +39,8 @@ def verify_header_links(context, expected_amount):
     expected_amount = int(expected_amount)
     header_links = context.driver.find_elements(*HEADER_LINKS)
     assert len(header_links) == expected_amount, f'Expected {expected_amount} links, but got {len(header_links)}'
+
+
+@then('Verify signin arrow shown')
+def verify_signin_arrow(context):
+    context.app.header.verify_signin_arrow()
