@@ -5,8 +5,13 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 
+from support.logger import logger
+
 from app.application import Application
 
+
+#  Run Behave tests with Allure results
+#  behave -f allure_behave.formatter:AllureFormatter -o test_results/ features/tests/main_page_ui.feature
 
 def browser_init(context, scenario_name):
     """
@@ -60,19 +65,22 @@ def browser_init(context, scenario_name):
 
 
 def before_scenario(context, scenario):
-    print('\nStarted scenario: ', scenario.name)
+    # print('\nStarted scenario: ', scenario.name)
+    logger.info(f'Started scenario: {scenario.name}')
     browser_init(context, scenario.name)
 
 
 def before_step(context, step):
-    print('\nStarted step: ', step)
+    logger.info(f'Started step: {step}')
+    # print('\nStarted step: ', step)
 
 
 def after_step(context, step):
     if step.status == 'failed':
         # Screenshot:
         # context.driver.save_screenshot(f'step_failed_{step}.png')
-        print('\nStep failed: ', step)
+        # print('\nStep failed: ', step)
+        logger.error(f'Step failed: {step}')
 
 
 def after_scenario(context, feature):

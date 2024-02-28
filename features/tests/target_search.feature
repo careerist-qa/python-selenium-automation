@@ -1,6 +1,7 @@
 # Created by svetlanalevinsohn at 1/27/24
 Feature: Target.com search tests
 
+  @positive_test @smoke
   Scenario: User can search for coffee on target
     Given Open Target main page
     When Search for coffee
@@ -24,6 +25,7 @@ Feature: Target.com search tests
     |coffee         |coffee             |coffee               |
     |tea            |tea                |tea                  |
 
+  @smoke
   Scenario: Verify that user can see product names and images
     Given Open target main page
     When Search for AirPods (3rd Generation)

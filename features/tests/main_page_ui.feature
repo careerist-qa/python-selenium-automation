@@ -4,6 +4,7 @@ Feature: Tests for main page UI
     Given Open Target main page
     Then Verify header in shown
 
+  @smoke
   Scenario: Verify header has correct amount links
     Given Open Target main page
     Then Verify header has 5 links
