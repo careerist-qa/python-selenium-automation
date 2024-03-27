@@ -21,4 +21,7 @@ sleep(6)
 actual_text = driver.find_element(By.XPATH, "//*[@id='__next']/div/div/div/div[1]/div/h1/span").text
 #Sign in button
 driver.find_element(By.XPATH, "//button[@type='submit']")
+
+print('Test case passed')
+
 driver.quit()
