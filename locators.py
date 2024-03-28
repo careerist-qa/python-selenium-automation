@@ -12,7 +12,7 @@ service = Service(driver_path)
 driver = webdriver.Chrome(service=service)
 driver.maximize_window()
 
-#open url
+#open url for amazon.com
 driver.get('https://www.amazon.com/')
 
 
