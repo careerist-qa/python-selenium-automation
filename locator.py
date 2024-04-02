@@ -15,20 +15,23 @@ driver.maximize_window()
 # open the url
 driver.get('https://www.amazon.com/')
 #Amazon logo
-driver.find_element(By.XPATH, "//i[@aria-label='Amazon']")
-
-#Email field
-driver.find_element(By.XPATH, "//input[@id='ap_email']")
-
-# Continue button
-driver.find_element(By.XPATH, "//input[@id='continue']")
-#Conditions of use link and Privacy Notice link
-driver.find_element(By.XPATH,  "//*[@id='legalTextRow']/a[1]" and "//*[@id='legalTextRow']/a[2]")
-#Need help link
-driver.find_element(By.XPATH, "//span[@class='a-expander-prompt']")
+driver.find_element(By.CSS_SELECTOR, "i.a-icon-logo")
+#Create account text
+driver.find_element(By.CSS_SELECTOR, "h1.a-spacing-small")
+# Your name section
+driver.find_element(By.CSS_SELECTOR, "#ap_customer_name")
+#Email section
+driver.find_element(By.CSS_SELECTOR, "input#ap_email")
+#Password
+driver.find_element(By.CSS_SELECTOR, "#ap_password")
 #FYI I don't have "Forgot your password link and Other issue with Sign-in link"
-
-#Create your Amazon account button
-driver.find_element(By.XPATH, "//a[@id='createAccountSubmit']")
-
-
+#Re-enter password
+driver.find_element(By.CSS_SELECTOR, "#ap_password_check")
+#Continue button
+driver.find_element(By.CSS_SELECTOR, "[type=submit]")
+#Conditions of Use
+driver.find_element(By.CSS_SELECTOR, "a[href*=ap_register_notification_condition_of_use]")
+#Policy
+driver.find_element(By.CSS_SELECTOR,"a[href*=ap_register_notification_privacy_notice]")
+#Sing in
+driver.find_element(By.CSS_SELECTOR,".a-link-emphasis")
