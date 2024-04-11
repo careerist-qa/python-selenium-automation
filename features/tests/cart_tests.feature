@@ -1,6 +1,6 @@
-# Created by Aiza at 4/9/2024
-Feature: # Enter feature name here
-  # Enter feature description here
+Feature: Cart tests
 
-  Scenario: # Enter scenario name here
-    # Enter steps here
+  Scenario: 'Your cart is empty' message is shown
+    Given Open Target main page
+    When Click on Cart icon
+    Then Verify 'Your cart is empty' message is shown

@@ -1,6 +1,24 @@
-# Created by Aiza at 4/9/2024
-Feature: # Enter feature name here
-  # Enter feature description here
+Feature: Search test
 
-  Scenario: # Enter scenario name here
-    # Enter steps here
+
+  Scenario: User can search for a product
+    Given Open Target main page
+    When Search for 'coffee'
+    Then Verify search results are shown for coffee
+
+  Scenario: Scenario: User can search for  tea
+    Given Open Target main page
+    When Search for 'tea'
+    Then Verify search results are shown for tea
+
+
+   Scenario Outline: User can search for a product
+    Given Open Target main page
+    When Search for '<item>'
+    Then Verify search results are shown for <expected_item>
+    Examples:
+    | item      | expected_item |
+    | mug       | mug           |
+    | tea       | tea           |
+    | spoon     | spoon         |
+    | sugar     | sugar         |
