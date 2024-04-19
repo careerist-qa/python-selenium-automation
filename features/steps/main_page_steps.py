@@ -16,14 +16,12 @@ SIDE_NAV_ADD_TO_CART_BTN = (By.CSS_SELECTOR, "[data-test='orderPickupButton']")
 
 @given('Open Target main page')
 def open_target(context):
-    context.driver.get('https://www.target.com/')
+    context.app.main_page.open_main()
 
 
 @when("Search for {item}")
 def search_product(context, item):
-    context.driver.find_element(*SEARCH_INPUT).send_keys(item)
-    context.driver.find_element(*SEARCH_BTN).click()
-    sleep(6)
+    context.app.header.search_product(item)
 
 
 @when('Click on Cart icon')
