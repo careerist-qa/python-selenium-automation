@@ -16,9 +16,17 @@ driver.maximize_window()
 driver.get('https://www.target.com/')
 
 # Enter 'coffee' in search field
-driver.find_element(By.ID, 'search').send_keys('coffee')
+search_field = driver.find_element(By.ID, 'search')
+print('Before refresh', search_field)
+driver.refresh()
+# To avoid StaleElementReferenceException, always find_element right before you interact with it.
+# search_field = driver.find_element(By.ID, 'search')
+# print('After refresh', search_field)
+search_field.send_keys('coffee')
+
 # Click search btn
-driver.find_element(By.XPATH, "//button[@data-test='@web/Search/SearchButton']").click()
+element = driver.find_element(By.XPATH, "//button[@data-test='@web/Search/SearchButton']")
+element.click()
 
 sleep(6)
 

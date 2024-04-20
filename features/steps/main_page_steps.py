@@ -26,7 +26,7 @@ def search_product(context, item):
 
 @when('Click on Cart icon')
 def click_cart(context):
-    context.driver.find_element(*CART_ICON).click()
+    context.app.header.click_cart()
 
 
 @when('Click on Add to Cart button')
