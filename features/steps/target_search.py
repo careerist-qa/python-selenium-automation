@@ -24,6 +24,6 @@ sleep(6)
 
 
 actual_text = driver.find_element(By.XPATH, "//div[@data-test='resultsHeading']").text
-assert 'coffee' in actual_text, f'Error! Text coffee not in {actual_text}'
+assert 'bicycle' in actual_text, f'Error! Text coffee not in {actual_text}'
 
 driver.quit()

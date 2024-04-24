@@ -15,7 +15,7 @@ CART_ITEM_TITLE = (By.CSS_SELECTOR, "[data-test*='cartItem-title']")
 
 @given('Open Target main page')
 def open_target(context):
-    context.driver.get('https://www.target.com/')
+    context.driver.get('https://www.target.')
 
 
 @when("Search for {item}")
