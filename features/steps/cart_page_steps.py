@@ -1,8 +1,11 @@
 from selenium.webdriver.common.by import By
 from behave import given, when, then
 from time import sleep
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
-ADDTOCARTLOCATOR = (By.CSS_SELECTOR, "[id*=addToCartButton]")
+
+ADDTOCARTLOCATOR = (By.CSS_SELECTOR, "[id*='addToCartButton']")
 CARTLOCATOR = (By.CSS_SELECTOR, "[data-test='orderPickupButton']")
 CARTPRODUCTCOUNTLOCATOR = (By.CSS_SELECTOR, "[class*=h-text-lg]")
 #VIEWCARTLOCATOR = (By.CSS_SELECTOR, "a[class*='styles__StyledBaseButtonInternal']")
@@ -11,13 +14,16 @@ CARTROWITEMSLOCATOR = (By.CSS_SELECTOR, "[data-test='cartItem']")
 
 @when('Click on add to cart button')
 def add_to_cart_button(context):
+    sleep(9)
+    #context.wait.until(EC.(ADDTOCARTLOCATOR)).click()
+    #context.driver.find_elements(*ADDTOCARTLOCATOR).click()
     arrayOfElements = context.driver.find_elements(*ADDTOCARTLOCATOR)
     arrayOfElements[len(arrayOfElements)-1].click()
 
-@when('Confirm add to cart button from side navigation')
-def confirm_to_cart_button(context):
-    arrayOfElements = context.driver.find_elements(*CARTLOCATOR)
-    arrayOfElements[len(arrayOfElements)-1].click()
+# @when('Confirm add to cart button from side navigation')
+# def confirm_to_cart_button(context):
+#     arrayOfElements = context.driver.find_elements(*CARTLOCATOR)
+#     arrayOfElements[len(arrayOfElements)-1].click()
 
 
 @then('Verify cart has 1 product')
@@ -27,7 +33,7 @@ def verify_cart_has_one_product(context):
     #assert actual_text == expected_text, f"Expected {expected_text}, got {actual_text}"
     #context.driver.find_element(*CARTPRODUCTCOUNTLOCATOR).text
     context.driver.get("https://www.target.com/cart")
-    sleep(5)
+    #sleep(5)
     elements = context.driver.find_elements(*CARTROWITEMSLOCATOR)
     assert len(elements) > 0, "No products"
 
