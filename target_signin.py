@@ -21,9 +21,10 @@ driver.find_element(By.XPATH, "//span[@class='styles__LinkText-sc-1e1g60c-3 dZfg
 sleep(3)
 #click signin from side bar
 driver.find_element(By.XPATH, "//a[@data-test='accountNav-signIn']").click()
-sleep(3)
-#Verify “Sign into your Target account” text is shown
+sleep(6)
 
+
+#Verify “Sign into your Target account” text is shown
 actual_text = driver.find_element(By.XPATH,"/html/body/div[1]/div/div/div/div[1]/div/h1/span[text()='Sign into your Target account']").text
 
 print(actual_text)

@@ -15,15 +15,16 @@ add_to_cart_side_nav =(By.XPATH, "//button[@data-test='shippingButton']")
 
 @given('Open target main page')
 def open_target(context):
-    context.driver.get("https://www.target.com/")
-
+    #context.driver.get("https://www.target.com/")
+    context.app.main_page.open_main_page()
 
 @when("Search for '{item}'")
 def search_for_product(context, item):
-    context.driver.find_element(*SEARCH_INPUT).send_keys(item)
-    context.driver.find_element(*SEARCH_BUTTON).click()
+    #context.driver.find_element(*SEARCH_INPUT).send_keys(item)
+    #context.driver.find_element(*SEARCH_BUTTON).click()
     #context.wait.until(EC.element_to_be_clickable(SEARCH_BUTTON)).click()
     #sleep(9)
+    context.app.header.search_product(item)
 
 @when('Click on cart icon')
 def click_on_cart_icon(context):
