@@ -18,7 +18,7 @@ def verify_color_options(context):
 
     all_color_options = context.driver.find_elements(*color_options)
     print('All colors:', all_color_options)
-    expected_colors = ['Aqua Blue Poppy', 'Black', 'Black White Animal Print', 'Bright Pink', p00pp0'Dark Blue White Petal', 'French Blue', 'Navy', 'Red Leafy Floral']
+    expected_colors = ['Aqua Blue Poppy', 'Black', 'Black White Animal Print', 'Bright Pink', 'Dark Blue White Petal', 'French Blue', 'Navy', 'Red Leafy Floral']
 
     actual_colors = []
     for color in all_color_options[:8]:
