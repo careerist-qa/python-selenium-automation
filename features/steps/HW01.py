@@ -23,8 +23,6 @@ driver.find_element(By.XPATH,"//input[@type='email']")
 
 driver.find_element(By.XPATH,"//input[@id='continue']")
 
-
-
 driver.find_element(By.XPATH,"//a[text()='Conditions of Use']")
 
 driver.find_element(By.XPATH,"//a[@href='/gp/help/customer/display.html/ref=ox_signin_privacy?ie=UTF8&amp;nodeId=468496']")
