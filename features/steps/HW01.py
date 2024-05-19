@@ -31,3 +31,7 @@ driver.find_element(By.XPATH,"//input[@name='metadata1']")
 
 driver.find_element(By.XPATH,"//a[@id='createAccountSubmit']")
 
+driver.find_element(By.XPATH,"//select[@aria-describedby='searchDropdownDescription']")
+driver.find_element(By.XPATH,"//select[@class='nav-search-dropdown searchSelect nav-progressive-attribute nav-progressive-search-dropdown']")'
+driver.find_element(By.XPATH,"//a[text()='/gp/bestsellers/?ref_=nav_cs_bestsellers' and 'class='nav-a  ']")
+
