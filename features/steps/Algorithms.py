@@ -66,8 +66,10 @@
 #
 # algo 3!!!!
 # def arithmetica(num_list):
-#    num_list = [i for i in num_list if i <= mean]
-#    return num_list
+#     mean = sum(num_list)/len(num_list)
+#     num_list = [i for i in num_list if i <= mean]
+#     return num_list
+#
 #
 # cat = [1, 3, 5, 6, 4, 10, 2, 3]
 # print(arithmetica(cat))
@@ -77,6 +79,27 @@
 #     n.sort()
 #     return n[0:2]
 #
+#
 # kat = [198, 3, 4, 9, 10, 9, 2]
 # print(low(kat))
 
+
+#algo 4!!!!
+# def even_1st(list):
+#     list = (sorted(list, key=lambda x: [x % 2, x]))
+#     print(list)
+#
+#
+# o = [7, 9, 3, 5, 6, 4, 10, 3, 2]
+# even_1st(o)
+
+
+def Increment(num):
+    str(num)
+    for i in num:
+        d = 0 + i
+        print(d)
+
+
+f = [1, 8, 9]
+Increment(f)
