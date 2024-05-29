@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support.events import EventFiringWebDriver
 from selenium.webdriver.chrome.service import Service
 
-# from support.logger import logger, MyListener
+from support.logger import logger, MyListener
 
 # Allure command:
 # behave -f allure_behave.formatter:AllureFormatter -o test_results/ features/tests/product_page.feature
@@ -53,10 +53,10 @@ def browser_init(context, my_test_name):
         'name': 'test_name'
         }
 
-    from selenium.webdriver.firefox.options import Options as FirefoxOptions
-    options = FirefoxOptions()
+    from selenium.webdriver.chrome.options import Options as ChromeOptions
+    options = ChromeOptions()
     options.browser_version = '92'
-    options.platform_name = 'Windows 10'
+    options.platform_name = 'Windows 11'
     cloud_options = {}
     cloud_options['build'] = 'my_test_build'
     cloud_options['name'] = my_test_name
@@ -75,18 +75,18 @@ def browser_init(context, my_test_name):
 
 def before_scenario(context, scenario):
     print('\nStarted scenario: ', scenario.name)
-    # logger.info(f'Started scenario: {scenario.name}')
+    logger.info(f'Started scenario: {scenario.name}')
     browser_init(context, scenario.name)
 
 
 def before_step(context, step):
     print('\nStarted step: ', step)
-    # logger.info(f'Started step: {step}')
+    logger.info(f'Started step: {step}')
 
 
 def after_step(context, step):
     if step.status == 'failed':
-        # logger.error(f'Step failed: {step}')
+        logger.error(f'Step failed: {step}')
         print('\nStep failed: ', step)
         # Mark test case as FAILED on BrowserStack:
         # context.driver.execute_script(

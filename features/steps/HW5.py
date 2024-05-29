@@ -3,7 +3,7 @@ from behave import given, when, then
 from time import sleep
 
 
-color_options = (By.CSS_SELECTOR,'ul.a-declarative.a-button-list li')
+color_options = (By.CSS_SELECTOR, 'ul.a-declarative.a-button-list li')
 curr_color = (By.CSS_SELECTOR, 'div.a-section span.selection')
 
 

@@ -103,3 +103,6 @@ def Increment(num):
 
 f = [1, 8, 9]
 Increment(f)
+
+h = ["a", "b", "c"]
+
