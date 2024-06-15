@@ -12,8 +12,6 @@ def browser_init(context):
     context.driver = webdriver.Chrome(service=service)
 
     context.driver.maximize_window()
-
-    context.driver.maximize_window()
     context.driver.implicitly_wait(4)
 
 
@@ -32,5 +30,4 @@ def after_step(context, step):
 
 
 def after_scenario(context, feature):
-    context.driver.delete_all_cookies()
     context.driver.quit()
