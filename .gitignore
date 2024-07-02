@@ -94,3 +94,7 @@ app_binaries/
 
 # Screenshots
 *.png
+
+# justin kwak ignore
+sandbox.py
+
