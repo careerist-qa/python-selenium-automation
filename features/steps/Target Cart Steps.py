@@ -20,6 +20,9 @@ def click_cart(context):
 @when('Clicking on Sign in')
 def click_signin(context):
     context.driver.find_element(By.XPATH, "//span[text()='Sign in']").click()
+    sleep(4)
+    context.driver.find_element(By.CSS_SELECTOR, "[data-test ='accountNav-signIn']").click()
+    sleep(4)
 
 
 ######################################## Then ########################################
@@ -33,9 +36,9 @@ def empty_cart(context):
 
 @then('Verify Sign in form opens')
 def sign_in_form(context):
-    expected_result= "Sign in"
-    actual_result = context.driver.find_element(By.XPATH, "//span[text()='Sign in']").text
-    assert expected_result == actual_result, f'Expected result, "{expected_result}" does not match the actual result," {actual_result}".'
+    expected_text= "Sign into your Target account"
+    actual_text = context.driver.find_element(By.XPATH, "//span[text()='Sign into your Target account']").text
+    assert expected_text == actual_text, f'Expected result, "{expected_text}" does not match the actual result," {actual_text}".'
 
 
 
