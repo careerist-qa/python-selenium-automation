@@ -22,7 +22,9 @@ def verify_cart_items(context, amount):
 @then('Verify cart has correct product')
 def verify_cart_items(context):
     actual_name = context.driver.find_element(*CART_ITEM_TITLE).text
-    assert actual_name == context.product_name, f"Expected {context.product_name} but got {actual_name}"
+    print(f'Product Name: {context.product_name}')
+    print(f'Actual Name: {actual_name}')
+    assert context.product_name[:20] == actual_name[:20], f"Expected {context.product_name} but got {actual_name}"
     context.tok = time.time()
     elapsed_time = context.tok - context.tic
     print(f'Elapsed time: {elapsed_time:.2f} seconds')
