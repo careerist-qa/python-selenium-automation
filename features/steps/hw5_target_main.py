@@ -1,9 +1,7 @@
-import time
-
 from selenium.webdriver.common.by import By
 from behave import given, when, then
-from time import sleep
 from selenium.webdriver import Keys
+from time import sleep
 import time
 
 
@@ -11,7 +9,6 @@ import time
 def open_target_main_page(context):
     context.tic = time.time()
     context.driver.get('https://www.target.com/')
-
 
 @when('Search for {product}')
 def search_for_product(context, product):

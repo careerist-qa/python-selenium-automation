@@ -10,7 +10,7 @@ CART_ITEM_TITLE = (By.CSS_SELECTOR, '[data-test="cartItem-title"]')
 @when('Open cart page')
 def open_cart_page(context):
     context.driver.get('https://www.target.com/cart')
-    sleep(2)
+    # sleep(2)    # To avoid NoSuchElementException at cart_summary in Verify cart has {amount} items(s)
 
 
 @then('Verify cart has {amount} itme(s)')
