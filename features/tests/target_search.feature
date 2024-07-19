@@ -38,3 +38,8 @@ Feature: Target main page search tests
     And Open cart page
     Then Verify cart has 1 item(s)
     And Verify cart has correct product
+
+  Scenario: Verify that user can see product names and images
+    Given Open target main page
+    When Search for AirPods (3rd Generation)
+    Then Verify that every product has a name and an image
