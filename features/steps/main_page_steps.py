@@ -10,12 +10,13 @@ def open_target(context):
 
 @when('Search for {product}')
 def search_product(context, product):
-    context.app.header.search_product()
+    print('Step layer:', product)
+    context.app.header.search_product(product)
 
 
 @when('Click on Cart icon')
 def click_cart(context):
-    context.driver.find_element(By.CSS_SELECTOR, "[data-test='@web/CartLink']").click()
+    context.app.header.click_cart()
 
 
 @then('Verify header in shown')
@@ -29,7 +30,15 @@ def verify_header_link_amount(context, number):
     links = context.driver.find_elements(By.CSS_SELECTOR, "[id*='utilityNav']")
     assert len(links) == number, f'Expected {number} links but got {len(links)}'
 
-    # Make sure to always assert len() for multiple elements as shown above
-    # because .find_elements() function never fails.
-    # This code with incorrect locator will always pass:
-    # context.driver.find_elements(By.CSS_SELECTOR, "[id*='utilityNav2613542']")
+
+@then('Verify can click every link')
+def verify_click_links(context):
+    links = context.driver.find_elements(By.CSS_SELECTOR, "[id*='utilityNav']")
+
+    for i in range(len(links)):
+        # Search for links again because their internal IDs changed:
+        # to avoid Stale Element Exception
+        links = context.driver.find_elements(By.CSS_SELECTOR, "[id*='utilityNav']")
+        print(f'Clicking on link {links[i].text}')
+        links[i].click()
+        sleep(4)
