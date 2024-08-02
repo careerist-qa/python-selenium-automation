@@ -1,5 +1,6 @@
 Feature: Target main page search tests
 
+  @smoke
   Scenario: User can search for coffee
     Given Open target main page
     When Search for coffee
@@ -29,6 +30,7 @@ Feature: Target main page search tests
     |tea      |tea                |
     |iphone   |iphone             |
 
+  @smoke
   Scenario: User can add a product to cart
     Given Open target main page
     When Search for mug

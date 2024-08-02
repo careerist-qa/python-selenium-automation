@@ -1,3 +1,4 @@
+@smoke
 Feature: Tests for main page UI
 
   Scenario: Verify header in shown
