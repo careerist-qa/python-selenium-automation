@@ -20,7 +20,7 @@ def search_product(context, item):
     context.driver.find_element(By.ID, 'search').send_keys(item)
     # Search button => click
     context.driver.find_element(By.XPATH, "//button[@data-test='@web/Search/SearchButton']").click()
-    sleep(5)  # wait for search results page to load
+    sleep(8)  # wait for search results page to load
 
 
 @then('Verify header has {expected_amount} links')
@@ -33,10 +33,3 @@ def verify_header_links(context, expected_amount):
 @then('Verify header is shown')
 def verify_header(context):
     context.driver.find_element(By.CSS_SELECTOR, "[class*='styles_utilityHeaderContainer']")
-
-
-# Example with multiple variables:
-# @when('Login as {username} and {pw}')
-# def search_product(context, username, pw):
-#     context.driver.find_element(By.ID, 'username').send_keys(username)
-#     context.driver.find_element(By.ID, 'password').send_keys(pw)
