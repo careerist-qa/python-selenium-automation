@@ -5,3 +5,5 @@ Feature: Test Scenarios for Search functionality
     When Input Table into search field
     And Click on search icon
     Then Product results for Table are shown
+
+
