@@ -8,6 +8,7 @@ from behave import given, when, then
 def verify_results(context, product):
    actual_result = context.driver.find_element(By.XPATH, "//div[@data-test='resultsHeading']").text
    assert product in actual_result, f'Expected {product}, got actual {actual_result}'
+   context.app.search_results_page.verify_results(product)
 
 
 ADD_TO_CART_BTN = (By.CSS_SELECTOR, "[id*='addToCartButton']")
@@ -41,4 +42,5 @@ def side_nav_click_add_to_cart(context):
         message='add to cart button not clickable'
     )
     #sleep(9)
+
 

@@ -13,10 +13,10 @@ def open_cart(context):
 
 @then('Verify cart Empty message shown')
 def verify_cart_empty(context):
-    expected_text='Your cart is empty'
-    actual_text= context.driver.find_element(By.CSS_SELECTOR, "[data-test='boxEmptyMsg'] h1").text
+    expected_text = 'Your cart is empty'
+    actual_text = context.driver.find_element(By.CSS_SELECTOR, "[data-test='boxEmptyMsg'] h1").text
     assert expected_text == actual_text, f'Expected {expected_text} did not match actual {actual_text}'
-
+    context.app.cart_page.verify_cart_empty()
 
 @then('Verify cart has correct product')
 def verify_product_name(context):
