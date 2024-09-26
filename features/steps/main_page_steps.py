@@ -29,6 +29,6 @@ def search_product(context, product):
     print(product)
     context.driver.find_element(By.ID, 'search').send_keys('tea')
     context.driver.find_element(By.XPATH, "//button[@data-test='@web/Search/SearchButton']").click()
-    sleep(5)
+    sleep(9)
 
 
