@@ -1,3 +1,4 @@
+@smoke
 Feature: Tests for Help pages
 
   Scenario: User can select Help topic Promotions & Coupons
