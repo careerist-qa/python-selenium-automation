@@ -10,10 +10,10 @@ class Application:
     def __init__(self, driver):
         self.driver = driver
         self.base_page=BasePage(driver)
-        self.main_page=MainPage(driver)
+        self.Main_page=MainPage(driver)
         self.header_page=HeaderPage(driver)
         self.search_results_page=SearchResultsPage(driver)
-        self.cart=Cart(driver)
+        self.cart_empty=Cart(driver)
 
 app=Application(driver)
 app.base_page.function
