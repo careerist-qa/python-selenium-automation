@@ -4,7 +4,8 @@ from Pages.header import HeaderPage
 from Pages.cart_messages import Cart
 from Pages.search_results_page import SearchResultsPage
 from Pages.chips_page import ChipsPage
-from Pages.Sign_in import SignPage
+from Pages.sign_in import SignPage
+from Pages.terms_conditions_page import TermsConditionsPage
 from locators import driver
 
 
@@ -17,7 +18,8 @@ class Application:
         self.search_results_page=SearchResultsPage(driver)
         self.cart_messages=Cart(driver)
         self.chips_page = ChipsPage(driver)
-        self.Sign_in=SignPage(driver)
+        self.sign_in=SignPage(driver)
+        self.terms_conditions_page=TermsConditionsPage(driver)
 
 app=Application(driver)
 

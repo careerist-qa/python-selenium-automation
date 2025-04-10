@@ -3,7 +3,6 @@ from behave import given, when, then
 from time import sleep
 
 
-
 @when("Click on Cart icon")
 def click_cart_icon(context):
     context.app.cart_empty.click_cart.click()
