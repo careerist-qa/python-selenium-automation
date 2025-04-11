@@ -1,0 +1,39 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+# Set up Chrome in Incognito mode
+chrome_options = Options()
+chrome_options.add_argument("--incognito")
+driver = webdriver.Chrome(options=chrome_options)
+
+try:
+    # Step 1
+    driver.get("https://www.target.com/")
+
+    # Step 2
+    sign_in_menu = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//span[text()='Sign in']"))
+    )
+    sign_in_menu.click()
+
+    # Step 3
+    sign_in_link = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//a[@data-test='accountNav-signIn']"))
+    )
+    sign_in_link.click()
+
+    # Step 4
+    WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located((By.XPATH, "//h1[contains(text(), 'Sign into your Target account')]"))
+    )
+    print(" Sign-in header is visible")
+
+    # Verify SignIn button is present
+    sign_in_button = driver.find_element(By.ID, "login")
+    print(" Sign-in button is located")
+
+finally:
+    driver.quit()
