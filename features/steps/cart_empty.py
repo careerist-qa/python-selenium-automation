@@ -7,6 +7,7 @@ from time import sleep
 def click_cart_icon(context):
     context.app.cart_empty.click_cart.click()
 
+
 @then("Verify “Your cart is empty” message is shown")
 def verify_cart_empty(context):
     expected_text = "Your cart is empty"

@@ -1,7 +1,0 @@
-Year_born = str(input('Enter year born: '))
-Name = input('Enter your name: ')
-
-message = f'Hello, {Name}. You were born in the year {Year_born}.'
-print(message)
-
-

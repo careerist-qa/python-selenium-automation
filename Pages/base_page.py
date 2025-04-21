@@ -1,9 +1,9 @@
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
 class BasePage:
-
 
     def __init__(self, driver):
         self.driver = driver
@@ -13,7 +13,7 @@ class BasePage:
         self.driver.get(url)
 
     def get_url(self):
-        return self.driver.current_url
+        return self.driver.current_url()
 
     def click(self,*locator):
         self.driver.find_element(*locator).click()
@@ -25,7 +25,7 @@ class BasePage:
         self.driver.find_element(*locator).send_keys(text)
 
     def get_current_window_handle(self):
-        return self.driver.current_window_handle
+        return self.driver.current_window_handle()
 
     def switch_to_new_window(self):
         self.wait.until(EC.new_window_is_opened())
@@ -38,12 +38,15 @@ class BasePage:
         self.driver.switch_to.window(window_id)
         print("Current Window: ", self.driver.current_window_handle)
 
+    def select_topic(self, option_value):
+        dd = self.find_element(*self.option_value)
+        select = Select(dd)
+        select.select_by_value(option_value)
+
 
     def wait_for_element_visible(self, locator):
-        return self.wait.until(
-            EC.visibility_of_element_located(locator),
-            message=f'Element by {locator} not visible'
-        )
+        return self.wait.until(EC.visibility_of_element_located(locator),
+            message=f'Element by {locator} not visible')
 
     def wait_for_element_invisible(self, locator):
         self.wait.until(
@@ -57,7 +60,7 @@ class BasePage:
             message=f'Element by {locator} not clickable'
         )
 
-    def wait_and_click(self, *locator):
+    def wait_and_click(self,locator):
         self.wait.until(
             EC.element_to_be_clickable(locator),
             message=f'Element by {locator} not clickable'

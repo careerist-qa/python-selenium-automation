@@ -6,7 +6,9 @@ from Pages.search_results_page import SearchResultsPage
 from Pages.chips_page import ChipsPage
 from Pages.sign_in import SignPage
 from Pages.terms_conditions_page import TermsConditionsPage
-from locators import driver
+from Pages.target_help_page import TargetHelpPage
+
+
 
 
 class Application:
@@ -20,8 +22,11 @@ class Application:
         self.chips_page = ChipsPage(driver)
         self.sign_in=SignPage(driver)
         self.terms_conditions_page=TermsConditionsPage(driver)
+        self.target_help_page=TargetHelpPage(driver)
 
-app=Application(driver)
+
+
+
 
 
 
