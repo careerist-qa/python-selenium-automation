@@ -1,0 +1,62 @@
+project/
+├── features/
+│   ├── steps/
+│   ├── pages/
+│   │   ├── home_page.py
+│   │   ├── search_results_page.py
+│   │   ├── cart_page.py
+│   └── ...
+
+
+from selenium.webdriver.common.by import By
+
+class HomePage:
+    def __init__(self, driver):
+        self.driver = driver
+        self.search_box = (By.ID, 'search')
+        self.cart_icon = (By.ID, 'utilityNav-cart')
+
+    def open(self):
+        self.driver.get("https://www.target.com/")
+
+    def search_product(self, product_name):
+        self.driver.find_element(*self.search_box).send_keys(product_name)
+        self.driver.find_element(*self.search_box).submit()
+
+    def click_cart_icon(self):
+        self.driver.find_element(*self.cart_icon).click()
+
+from selenium.webdriver.common.by import By
+
+class CartPage:
+    def __init__(self, driver):
+        self.driver = driver
+        self.empty_cart_text = (By.XPATH, "//*[contains(text(), 'Your cart is empty')]")
+
+    def is_cart_empty_message_displayed(self):
+        return self.driver.find_element(*self.empty_cart_text).is_displayed()
+
+Feature: Cart page
+
+  Scenario: “Your cart is empty” message is shown for empty cart
+    Given I open the Target homepage
+    When I click on the cart icon
+    Then I should see the “Your cart is empty” message
+
+from behave import given, when, then
+from features.pages.home_page import HomePage
+from features.pages.cart_page import CartPage
+
+@given("I open the Target homepage")
+def step_open_homepage(context):
+    context.home_page = HomePage(context.browser)
+    context.home_page.open()
+
+@when("I click on the cart icon")
+def step_click_cart(context):
+    context.home_page.click_cart_icon()
+    context.cart_page = CartPage(context.browser)
+
+@then("I should see the “Your cart is empty” message")
+def step_verify_empty_cart(context):
+    assert context.cart_page.is_cart_empty_message_displayed(), "Empty cart message not displayed"

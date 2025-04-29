@@ -1,7 +1,6 @@
 Feature: Test Scenarios for Search functionality
 
-  Scenario: User can search for a product
-    Given Open Google page
-    When Input Car into search field
-    And Click on search icon
-    Then Product results for Car are shown
+    Scenario: User can search for a tes on target
+        Given Open target main page
+        When search for tea
+        #Then Product results for tea

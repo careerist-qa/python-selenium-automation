@@ -1,0 +1,38 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from behave import given, when, then
+import time
+
+@given("I open the Target homepage")
+def step_open_homepage(context):
+    context.driver = webdriver.Chrome()
+    context.driver.get("https://www.target.com")
+    context.driver.maximize_window()
+    time.sleep(3)
+
+@when('I search for "headphones"')
+def step_search(context):
+    search_box = context.driver.find_element(By.ID, "search")
+    search_box.send_keys("headphones")
+    search_box.send_keys(Keys.RETURN)
+    time.sleep(3)
+
+@when("I add the first product to the cart")
+def step_add_first_product(context):
+    product = context.driver.find_elements(By.CSS_SELECTOR, '[data-test="product-title"]')[0]
+    product.click()
+    time.sleep(3)
+    
+    add_to_cart_button = context.driver.find_element(By.XPATH, "//button[contains(text(), 'Add to cart')]")
+    add_to_cart_button.click()
+    time.sleep(3)
+
+@then("I should see the product in the cart")
+def step_verify_cart(context):
+    context.driver.get("https://www.target.com/co-cart")
+    time.sleep(3)
+    
+    cart_items = context.driver.find_elements(By.CSS_SELECTOR, '[data-test="cartItem"]')
+    assert len(cart_items) > 0, "Cart is empty after adding product."
+    context.driver.quit()

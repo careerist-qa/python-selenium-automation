@@ -1,0 +1,55 @@
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+class SignInPage:
+    def __init__(self, driver):
+        self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
+        self.terms_link = (By.LINK_TEXT, "Target terms & conditions")
+
+    def click_terms_link(self):
+        self.wait.until(EC.element_to_be_clickable(self.terms_link)).click()
+
+
+  from behave import given, when, then
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from pages.sign_in_page import SignInPage
+
+@given("I open the Target sign in page")
+def step_open_signin(context):
+    context.driver = webdriver.Chrome()
+    context.driver.get("https://www.target.com/login")
+    context.driver.maximize_window()
+    context.wait = WebDriverWait(context.driver, 10)
+    context.sign_in_page = SignInPage(context.driver)
+
+@when("I store the original window")
+def step_store_original_window(context):
+    context.original_window = context.driver.current_window_handle
+
+@when("I click on the Target Terms and Conditions link")
+def step_click_terms_link(context):
+    context.sign_in_page.click_terms_link()
+
+@when("I switch to the newly opened window")
+def step_switch_to_new_window(context):
+    context.wait.until(EC.number_of_windows_to_be(2))
+    for handle in context.driver.window_handles:
+        if handle != context.original_window:
+            context.driver.switch_to.window(handle)
+            break
+
+@then("I should see the Terms and Conditions page")
+def step_verify_terms_page(context):
+    context.wait.until(EC.title_contains("Terms"))
+    assert "terms" in context.driver.title.lower()
+
+@then("I close the new window and switch back to original")
+def step_close_and_return(context):
+    context.driver.close()
+    context.driver.switch_to.window(context.original_window)
+    assert "target.com/login" in context.driver.current_url
+    context.driver.quit()

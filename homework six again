@@ -1,0 +1,812 @@
+
+##outline
+#ap
+_init_.py
+application.py
+#features
+-steps
+_init_.py
+cart_steps.py
+main_page_steps.py
+product_details_steps.py
+search_results_steps.py
+-tests
+_init_.py
+cart.feature
+main_page_ui-tests.feature
+product_details.feature
+product_search.feature
+target_search.feature
+-init_.py
+-enviroment.py
+#pages
+_init_.py
+base_page.py
+header.py
+main_page.py
+home_page.py
+search_results_page.py
+--gitignore
+--readme.md
+--css.selectors.py
+--locators.py
+--playground.py
+--requirements.txt
+--sample_script.py
+--target_search.py
+--target_signin.py
+##
+
+
+#under app, then click application.py
+
+from pages.base_page import Page
+from pages.header import Header
+from pages.main_page import MainPage
+from pages.search_results_page import SearchResultsPage
+
+
+class Application:
+
+    def __init__(self, driver):
+        self.driver = driver
+        self.main_page = MainPage(driver)
+        self.header =Header(driver)
+        self.search_results_page = SearchResultsPage(driver)
+
+
+#under feature, then click steps, then cart_steps.py
+
+from behave import given, when, then
+from pages.home_page import HomePage
+from pages.cart_page import CartPage
+
+@given('Open Target main page')
+def step_open_main_page(context):
+    context.home_page = HomePage(context.driver)
+    context.home_page.load()
+
+@when('Click on cart icon')
+def step_click_cart(context):
+    context.home_page.click_cart()
+    context.cart_page = CartPage(context.driver)
+
+@then('Verify Cart Empty message shown')
+def step_verify_cart_empty_message(context):
+    assert context.cart_page.is_cart_empty_message_displayed(), "Empty cart message not displayed"
+
+
+from selenium.webdriver.common.by import By
+from behave import given, when, then
+
+CART_SUMMARY = (By.XPATH, "//div[./span[contains(text(), 'subtotal')]]")
+CART_ITEM_TITLE = (By.CSS_SELECTOR, "[data-test='cartItem-title']")
+
+@when('Open cart page')
+def open_cart(context):
+    context.driver.get('https://www.target.com/cart')
+
+
+@then('Verify Cart Empty message shown')
+def verify_cart_empty(context):
+    expected_text = 'Your cart is empty'
+    actual_text = context.driver.find_element(By.CSS_SELECTOR, "[data-test='boxEmptyMsg'] h1").text
+    assert expected_text == actual_text, f'Expected {expected_text} did not match actual {actual_text}'
+
+
+@then('Verify cart has correct product')
+def verify_product_name(context):
+    actual_name = context.driver.find_element(*CART_ITEM_TITLE).text
+    print(f'Actual product in cart name: {actual_name}')
+    assert context.product_name in actual_name, f"Expected {context.product_name} but got {actual_name}"
+
+
+@then('Verify cart has {amount} item(s)')
+def verify_cart_items(context, amount):
+    cart_summary = context.driver.find_element(*CART_SUMMARY).text
+    assert f'{amount} item' in cart_summary, f"Expected {amount} items but got {cart_summary}"
+
+
+#under features, steps and main_page_steps.py
+
+from selenium.webdriver.common.by import By
+from behave import given, when, then
+
+@given('Open target main page')
+def open_main(context):
+    context.app.main_page.open_main_page()
+
+@when('Click on cart icon')
+def click_cart(context):
+    context.driver.find_element(By.CSS_SELECTOR, "[data-test='@web/CartLink']").click()
+
+
+@when('Search for {item}')
+def search_product(context, item):
+    context.app.header.search(item)
+
+
+@then('Verify header has {expected_amount} links')
+def verify_header_links(context, expected_amount):
+    expected_amount = int(expected_amount) # '6' => 6
+    links = context.driver.find_elements(By.CSS_SELECTOR, "[data-test*='@web/GlobalHeader/UtilityHeader/']")
+    assert len(links) == expected_amount, f'Expected {expected_amount} links but got {len(links)}'
+
+#under features, stpes and product_details_steps.py
+
+from selenium.webdriver.common.by import By
+from behave import given, then
+from time import sleep
+
+COLOR_OPTIONS = (By.CSS_SELECTOR, "div[aria-label='Carousel'] li img")
+SELECTED_COLOR = (By.CSS_SELECTOR, "[data-test='@web/VariationComponent'] div")
+
+@given('Open target product {product_id} page')
+def open_target(context, product_id):
+    context.driver.get(f'https://www.target.com/p/{product_id}')
+    sleep(8)
+
+@then('Verify user can click through colors')
+def click_and_verify_colors(context):
+    expected_colors = ['Blue Tint', 'Denim Blue', 'Marine', 'Raven']
+    actual_colors = []
+
+    colors = context.driver.find_elements(*COLOR_OPTIONS) # [webelement1, webelement2, webelement3]
+    print(colors)
+
+    for color in colors:
+        print(color)
+        color.click()
+
+        selected_color = context.driver.find_element(*SELECTED_COLOR).text # 'Color\nBlack'
+        print('Current color text', selected_color)
+
+        selected_color = selected_color.split('\n')[1] # remove 'Color\n' part, keep Black'
+        actual_colors.append(selected_color)
+        print('actual_colors list: ', actual_colors)
+
+    assert expected_colors == actual_colors, f'Expected {expected_colors} did not match actual {actual_colors}'
+
+#features, steps and search_results_steps.py
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from behave import given, when, then
+from time import sleep
+
+ADD_TO_CART_BTN = (By.CSS_SELECTOR, "[id*='addToCartButton']")
+ADD_TO_CART_BTN_SIDE_NAV = (By.CSS_SELECTOR, "[data-test='content-wrapper'] [id*='addToCart']")
+SIDE_NAV_PRODUCT_NAME = (By.CSS_SELECTOR, "[data-test='content-wrapper'] h4")
+LISTINGS = (By.CSS_SELECTOR, "[data-test='@web/site-top-of-funnel/ProductCardWrapper']")
+PRODUCT_TITLE = (By.CSS_SELECTOR, "[data-test='product-title']")
+PRODUCT_IMG = (By.CSS_SELECTOR, 'img')
+
+@when('Click on Add to Cart button')
+def click_add_to_cart(context):
+    context.driver.find_element(*ADD_TO_CART_BTN).click() # always clicks on 1st Add to cart btn
+    context.driver.wait.until(
+        EC.visibility_of_element_located(SIDE_NAV_PRODUCT_NAME),
+        message='Side navigation product name not visible'
+    )
+
+
+@when('Store product name')
+def store_product_name(context):
+    context.product_name = context.driver.find_element(*SIDE_NAV_PRODUCT_NAME).text
+    print(f'Product stored: {context.product_name}')
+
+
+@when('Confirm Add to Cart button from side navigation')
+def side_nav_click_add_to_cart(context):
+    context.driver.find_element(*ADD_TO_CART_BTN_SIDE_NAV).click()
+    sleep(3)
+
+
+@then('Verify that correct search results shown for {product}')
+def verify_results(context, product):
+    context.app.search_results_page.verify_results(product)
+
+
+@then('Verify that every product has a name and an image')
+def verify_products_name_img(context):
+    # To see ALL listings (comment out if you only check top ones):
+    context.driver.execute_script("window.scrollBy(0,2000)", "")
+    sleep(4)
+    context.driver.execute_script("window.scrollBy(0,2000)", "")
+
+    all_products = context.driver.find_elements(*LISTINGS) # [WebEl1, WebEl2, WebEl3, WebEl4]
+
+    for product in all_products:
+        title = product.find_element(*PRODUCT_TITLE).text
+        assert title, 'Product title not shown'
+        print(title)
+        product.find_element(*PRODUCT_IMG)
+
+#tests, cart_feature
+
+Feature: Cart tests
+
+  Scenario: User can see Cart Empty message
+    Given Open target main page
+    When Click on cart icon
+    Then Verify Cart Empty message shown
+
+#main_page_ui_tests.feature
+
+Feature: Tests for main page UI
+
+  Scenario: Verify header in shown
+    Given Open Target main page
+    Then Verify header is shown
+
+  Scenario: Verify header has correct amount links
+    Given Open Target main page
+    Then Verify header is shown
+    And Verify header has 6 links
+
+#product_details.feature
+
+Feature: Tests for product page
+
+  Scenario: User can select colors
+    Given Open target product A-54551690 page
+    Then Verify user can click through colors
+
+#target_search.feature
+
+Feature: Tests for Target Search functionality
+
+  Scenario: User can search for coffee
+    Given Open target main page
+    When Search for coffee
+    Then Verify that correct search results shown for coffee
+
+  Scenario: User can search for tea
+    Given Open target main page
+    When Search for tea
+    Then Verify that correct search results shown for tea
+
+  Scenario Outline: User can search for product
+    Given Open target main page
+    When Search for <search_word>
+    Then Verify that correct search results shown for <search_result>
+    Examples:
+    |search_word |search_result |
+    |coffee |coffee |
+    |tea |tea |
+    |mug |mug |
+    |sugar |sugar |
+
+  Scenario: User can add a product to cart
+    Given Open target main page
+    When Search for mug
+    And Click on Add to Cart button
+    And Store product name
+    And Confirm Add to Cart button from side navigation
+    And Open cart page
+    Then Verify cart has 1 item(s)
+    And Verify cart has correct product
+
+  Scenario: Verify that user can see product names and images
+    Given Open target main page
+    When Search for AirPods (3rd Generation)
+    Then Verify that every product has a name and an image
+
+#tests and enviroment.py
+
+from selenium.import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.wait import WebDriverWait
+from webdriver_manager.chrome import ChromeDriverManager
+
+from app application import Application
+
+def browser_init(context):
+    """
+    :param context: Behave context
+    """
+    driver_path = ChromeDriverManager().install()
+    service = Service(driver_path)
+    context.driver = webdriver.Chrome(service=service)
+
+    context.driver.maximize_window()
+
+    context.driver.maximize_window()
+    context.driver.implicitly_wait(4)
+    context.wait = WebDriverWait(context.driver, 10)
+    context app = Application(context.driver)
+
+
+def before_scenario(context, scenario):
+    print('\nStarted scenario: ', scenario.name)
+    browser_init(context)
+
+def before_step(context, step):
+    print('\nStarted step: ', step)
+
+
+def after_step(context, step):
+    if step.status == 'failed':
+        print('\nStep failed: ', step)
+
+
+def after_scenario(context, feature):
+    context.driver.delete_all_cookies()
+    context.driver.quit()
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+
+def before_all(context):
+    options = Options()
+    options.add_argument("--start-maximized")
+    service = Service()
+    context.driver = webdriver.Chrome(service=service, options=options)
+
+def after_all(context):
+    context.driver.quit()
+
+
+#pages and base_page.py
+
+class Page:
+
+    def __init__(self, driver):
+        self.driver = driver
+
+    def open_url(self, url):
+        self.driver.get(url)
+
+    def find_element(self,  *locater):
+        self.driver.find_element(*locater)
+
+    def click(self, *locator):
+        self.driver.find_element(*locator).click()
+
+    def input_text(self, text, *locator):
+        self.driver.find_element(*locator).send_keys(text)
+
+#home_page.py
+
+from selenium.webdriver.common.by import By
+
+class HomePage:
+    URL = "https://www.target.com"
+    CART_ICON = (By.ID, "utilityNav-cart")
+
+    def __init__(self, driver):
+        self.driver = driver
+
+    def load(self):
+        self.driver.get(self.URL)
+
+    def click_cart(self):
+        self.driver.find_element(*self.CART_ICON).click()
+
+#cart_page.py
+
+from selenium.webdriver.common.by import By
+
+class CartPage:
+    EMPTY_CART_MESSAGE = (By.XPATH, "//*[contains(text(),'Your cart is empty')]")
+
+    def __init__(self, driver):
+        self.driver = driver
+
+    def is_cart_empty_message_displayed(self):
+        return self.driver.find_element(*self.EMPTY_CART_MESSAGE).is_displayed()
+
+
+
+#header.py
+
+from selenium.webdriver.common.by import By
+from pages.base_page import Page
+from time import sleep
+
+class Header(Page):
+
+    SEARCH_FIELD = (By.ID, 'search')
+    SEARCH_BTN = (By.CSS_SELECTOR, '[data-test="@web/Search/SearchButton"]')
+
+    def search(self, text):
+        self.input_text(text, *self.SEARCH_FIELD)
+        self.click(*self.SEARCH_BTN)
+        sleep(5)
+
+
+#main_page.py
+
+from pages.base_page import Page
+
+class MainPage(Page):
+
+    def open_main_page(self):
+        self.open('https://www.target.com/')
+
+#search_results_page.py
+
+from selenium.webdriver.common.by import By
+
+from pages.base_page import Page
+
+
+class SearchResultsPage(Page):
+    Search_Results_TEXT = By.XPATH, "//div(@data-test=\p=resultsCount"}")
+
+    def verify_search_results(self):
+        actual_text = self.find_element(self.Search_Results_TEXT).text
+        assert "tea" in actual_text. f Error. Text tea not in (actual_text)
+
+
+#.gitignore
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# PyBuilder
+target/
+
+# pyenv
+.python-version
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+
+# idea
+.idea/
+*.iws/
+
+# logs
+*.log
+
+# app files
+app_binaries/
+*.apk
+*.app
+*.ipa
+
+.DS_Store
+
+/features/test_results/*
+
+# Screenshots
+*.png
+
+#css_selectors.py
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from time import sleep
+
+# get the path to the ChromeDriver executable
+driver_path = ChromeDriverManager().install()
+
+# create a new Chrome browser instance
+service = Service(driver_path)
+driver = webdriver.Chrome(service=service)
+driver.maximize_window()
+
+# open the url
+driver.get('https://www.amazon.com/')
+
+# By CSS, by ID, use #:
+driver.find_element(By.CSS_SELECTOR, "#twotabsearchtextbox")
+# Same as =>
+driver.find_element(By.ID, "twotabsearchtextbox")  # Note, By.ID is preferred if you only use ID
+
+# By CSS, by class, use .
+driver.find_element(By.CSS_SELECTOR, ".nav-progressive-attribute")
+driver.find_element(By.CSS_SELECTOR, ".nav-input.nav-progressive-attribute")
+# By CSS, by tag & class(es)
+driver.find_element(By.CSS_SELECTOR, "input.nav-input.nav-progressive-attribute")
+# By CSS, tag & ID & class
+driver.find_element(By.CSS_SELECTOR, "input#twotabsearchtextbox.nav-input.nav-progressive-attribute")
+
+# By CSS, attributes, use []:
+driver.find_element(By.CSS_SELECTOR, "[placeholder='Search Amazon']")
+driver.find_element(By.CSS_SELECTOR, "input[placeholder='Search Amazon']")
+driver.find_element(By.CSS_SELECTOR, ".nav-input[tabindex='0'][placeholder='Search Amazon']")
+
+# By CSS, attribute, partial match:
+driver.find_element(By.CSS_SELECTOR, "[href*='notification_condition_of_use']")
+driver.find_element(By.CSS_SELECTOR, "[class*='search']")
+driver.find_element(By.CSS_SELECTOR, "[id*='search']")
+
+# By CSS, from parent => to child, separate by space:
+driver.find_element(By.CSS_SELECTOR, "#legalTextRow [href*='privacy']")
+driver.find_element(By.CSS_SELECTOR, ".a-box-inner #legalTextRow [href*='privacy']")
+
+#locators.py
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from time import sleep
+
+# get the path to the ChromeDriver executable
+driver_path = ChromeDriverManager().install()
+
+# create a new Chrome browser instance
+service = Service(driver_path)
+driver = webdriver.Chrome(service=service)
+driver.maximize_window()
+
+# open the url
+driver.get('https://www.amazon.com/')
+
+# Locate element:
+# driver.find_element() # By. / value
+# Locate by ID:
+driver.find_element(By.ID, 'twotabsearchtextbox')
+driver.find_element(By.ID, 'nav-logo-sprites')
+
+# By Xpath, using 1 attribute
+driver.find_element(By.XPATH, "//img[@alt='Shop Studio Pro headphones']")
+driver.find_element(By.XPATH, "//input[@name='field-keywords']")
+driver.find_element(By.XPATH, "//input[@placeholder='Search Amazon']")
+# By Xpath, multiple attributes
+driver.find_element(By.XPATH, "//a[@class='nav-a  ' and @href='/gp/bestsellers/?ref_=nav_cs_bestsellers' and @tabindex='0']")
+
+# By Xpath, text:
+driver.find_element(By.XPATH, "//a[text()='Best Sellers']")
+driver.find_element(By.XPATH, '//a[text()="Best Sellers"]')
+# By Xpath, text and attributes:
+driver.find_element(By.XPATH, "//a[text()='Best Sellers' and @class='nav-a  ']")
+
+# By attributes or text only, any tag
+driver.find_element(By.XPATH, "//*[@name='field-keywords']")
+driver.find_element(By.XPATH, "//*[text()='Best Sellers' and @class='nav-a  ']")
+
+# By attributes, parent node => child
+driver.find_element(By.XPATH, "//div[@id='nav-main']//a[text()='Best Sellers']")
+
+#playgrond.py
+
+# class Page:
+#
+#     def click(self):
+#         print('Clicking')
+#
+#     def input_text(self, text):
+#         print(f'Entering text {text}')
+#
+#     def find_element(self):
+#         print('Searching for element')
+#
+#
+# class LoginPage(Page):
+#
+#     def login(self):
+#         self.find_element()
+#         self.click()
+#
+#
+# # login_page = LoginPage()
+# # login_page.login()
+
+
+#requirements.txt
+
+allure-behave
+behave
+selenium
+webdriver-manager
+
+#sample_script.py
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
+
+# get the path to the ChromeDriver executable
+driver_path = ChromeDriverManager().install()
+
+# create a new Chrome browser instance
+service = Service(driver_path)
+driver = webdriver.Chrome(service=service)
+driver.maximize_window()
+# driver.implicitly_wait(4)
+wait = WebDriverWait(driver, timeout=10)
+
+# open the url
+driver.get('https://www.google.com/')
+
+# populate search field
+search = driver.find_element(By.NAME, 'q')
+search.clear()
+search.send_keys('Car')
+
+# wait for 4 sec
+# sleep(4)
+search_btn = (By.NAME, 'btnK')
+
+# click search button
+wait.until(EC.element_to_be_clickable(search_btn), message='Search button not clickable').click()  # => (By.smth, "value")
+driver.find_element(*search_btn).click() # => 2: By..smth / "value"
+
+# verify search results
+assert 'car'.lower() in driver.current_url.lower(), f"Expected query not in {driver.current_url.lower()}"
+print('Test Passed')
+
+driver.quit()
+
+#sample script
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
+
+
+# get the path to the ChromeDriver executable
+driver_path = ChromeDriverManager().install()
+
+
+
+# create a new Chrome browser instance
+service = Service(driver_path)
+driver = webdriver.Chrome(service=service)
+driver.maximize_window()
+
+# open the url
+driver.get('https://www.google.com/')
+
+# populate search field
+search = driver.find_element(By.NAME, 'q')
+search.clear()
+search.send_keys('Car')
+
+# wait for 4 sec
+sleep(4)
+
+# click search button
+driver.find_element(By.NAME, 'btnK').click()
+
+# verify search results
+assert 'car' in driver.current_url.lower(), f"Expected query not in {driver.current_url.lower()}"
+print('Test Passed')
+
+driver.quit()
+
+#target.search.py
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from time import sleep
+
+# get the path to the ChromeDriver executable
+driver_path = ChromeDriverManager().install()
+
+# create a new Chrome browser instance
+service = Service(driver_path)
+driver = webdriver.Chrome(service=service)
+driver.maximize_window()
+
+# open the url
+driver.get('https://www.google.com/')
+
+# populate search field
+search = driver.find_element(By.NAME, 'q')
+search.clear()
+search.send_keys('Car')
+
+# wait for 4 sec
+sleep(4)
+
+# click search button
+driver.find_element(By.NAME, 'btnK').click()
+
+# verify search results
+assert 'car' in driver.current_url.lower(), f"Expected query not in {driver.current_url.lower()}"
+print('Test Passed')
+
+driver.quit()
+
+#target_signin.py
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from time import sleep
+
+# Start Chrome browser:
+driver_path = ChromeDriverManager().install()
+driver = webdriver.Chrome(service=Service(driver_path))
+driver.maximize_window()
+driver.implicitly_wait(5)
+
+# Open target.com
+driver.get('https://www.target.com/')
+
+driver.find_element(By.XPATH, "//*[@data-test='@web/AccountLink']").click()
+driver.find_element(By.XPATH, "//*[@data-test='accountNav-signIn']").click()
+
+expected = 'Sign into your Target account'
+actual = driver.find_element(By.XPATH, "//h1/span").text
+assert expected == actual, f'Expected {expected} did not match actual {actual}'
+
+# OR:
+driver.find_element(By.XPATH, "//span[text()='Sign into your Target account']")
+
+# Make sure login button is shown
+driver.find_element(By.ID, 'login')
+
+

@@ -1,0 +1,71 @@
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+class SearchResultsPage:
+    def __init__(self, driver):
+        self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
+
+    def click_first_product(self):
+        first_product = self.wait.until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[data-test="product-title"]'))
+        )[0]
+        first_product.click()
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+class ProductPage:
+    def __init__(self, driver):
+        self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
+
+    def add_to_cart(self):
+        add_button = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Add to cart')]"))
+        )
+        add_button.click()
+
+from behave import given, when, then
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from pages.search_results_page import SearchResultsPage
+from pages.product_page import ProductPage
+from pages.cart_page import CartPage
+from pages.home_page import HomePage
+
+@given("I open the Target homepage")
+def step_open_home(context):
+    context.driver = webdriver.Chrome()
+    context.driver.get("https://www.target.com")
+    context.driver.maximize_window()
+    context.wait = WebDriverWait(context.driver, 10)
+    context.search_results_page = SearchResultsPage(context.driver)
+    context.product_page = ProductPage(context.driver)
+    context.cart_page = CartPage(context.driver)
+
+@when('I search for "headphones"')
+def step_search_product(context):
+    search_box = context.wait.until(EC.presence_of_element_located((By.ID, "search")))
+    search_box.send_keys("headphones")
+    search_box.send_keys(Keys.RETURN)
+
+@when("I click on the first product")
+def step_click_product(context):
+    context.search_results_page.click_first_product()
+
+@when("I add the product to the cart")
+def step_add_to_cart(context):
+    context.product_page.add_to_cart()
+
+@then("I should see the product in the cart")
+def step_verify_cart(context):
+    context.cart_page.open_cart()
+    assert context.cart_page.is_cart_not_empty()
+    context.driver.quit
+

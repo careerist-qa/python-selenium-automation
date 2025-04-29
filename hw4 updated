@@ -1,0 +1,70 @@
+from behave import given, when, then
+from selenium.webdriver.common.by import By
+
+@given('I open the Target homepage')
+def step_impl(context):
+    context.browser.get("https://www.target.com/")
+
+@when('I search for the product "{product_name}"')
+def step_impl(context, product_name):
+    search_box = context.browser.find_element(By.ID, 'search')
+    search_box.send_keys(product_name)
+    search_box.submit()
+
+@then('I should see search results for "{product_name}"')
+def step_impl(context, product_name):
+    context.browser.implicitly_wait(10)
+    assert product_name.lower() in context.browser.page_source.lower()
+
+
+  from behave import given, then
+from selenium.webdriver.common.by import By
+
+@given('I open the Target Circle page')
+def step_impl(context):
+    context.browser.get("https://www.target.com/circle")
+
+@then('I should see at least 10 benefit cells')
+def step_impl(context):
+    context.browser.implicitly_wait(10)
+    cells = context.browser.find_elements(By.CSS_SELECTOR, '[data-test="circle-benefit-card"]')
+    assert len(cells) >= 10, f"Only found {len(cells)} benefit cells"
+
+
+  from behave import given, when, then
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+@given('I search for a product "{product_name}"')
+def step_impl(context, product_name):
+    context.browser.get("https://www.target.com/")
+    search_box = context.browser.find_element(By.ID, 'search')
+    search_box.send_keys(product_name)
+    search_box.submit()
+
+@when('I add the first product to the cart')
+def step_impl(context):
+    WebDriverWait(context.browser, 10).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, '[data-test="product-title"]'))
+    )
+    first_product = context.browser.find_element(By.CSS_SELECTOR, '[data-test="product-title"]')
+    first_product.click()
+
+    add_button = WebDriverWait(context.browser, 10).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-test="addToCartButton"]'))
+    )
+    add_button.click()
+
+@then('I should see the product in my cart')
+def step_impl(context):
+    cart_icon = WebDriverWait(context.browser, 10).until(
+        EC.element_to_be_clickable((By.ID, 'utilityNav-cart'))
+    )
+    cart_icon.click()
+
+    cart_items = WebDriverWait(context.browser, 10).until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[data-test="cart-item"]'))
+    )
+    assert len(cart_items) > 0
+

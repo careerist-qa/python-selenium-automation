@@ -1,0 +1,38 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from behave import given, when, then
+
+@given("I open the product page with multiple colors")
+def step_open_product(context):
+    context.driver = webdriver.Chrome()
+    context.driver.get("https://www.target.com/p/A-54551690")
+    context.driver.maximize_window()
+    context.wait = WebDriverWait(context.driver, 10)
+    context.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '[data-test="colorSwatch"]')))
+
+@when("I click through each color option")
+def step_click_colors(context):
+    # Collect all swatches
+    swatches = context.driver.find_elements(By.CSS_SELECTOR, '[data-test="colorSwatch"]')
+    context.selected_colors = []
+
+    for i in range(len(swatches)):
+        swatches = context.driver.find_elements(By.CSS_SELECTOR, '[data-test="colorSwatch"]')
+        swatches[i].click()
+
+        # Wait for the swatch to be selected
+        context.wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-test="colorSwatch"].Selected'))
+        )
+
+        selected = context.driver.find_element(By.CSS_SELECTOR, '[data-test="colorSwatch"].Selected')
+        color_name = selected.get_attribute("aria-label")
+        context.selected_colors.append(color_name)
+
+@then("I should verify that the color is selected")
+def step_verify_selected_color(context):
+    assert len(context.selected_colors) > 0
+    print("Verified selected colors:", context.selected_colors)
+    context.driver.quit()

@@ -1,0 +1,118 @@
+project/
+├── features/
+│   ├── steps/
+│   │   ├── cart_steps.py
+│   │   ├── search_steps.py
+│   ├── pages/
+│   │   ├── base_page.py
+│   │   ├── home_page.py
+│   │   ├── cart_page.py
+│   ├── cart.feature
+│   ├── search.feature
+├── environment.py
+
+class Page:
+    def __init__(self, driver):
+        self.driver = driver
+
+    def open_url(self, url):
+        self.driver.get(url)
+
+    def find_element(self, locator):
+        return self.driver.find_element(*locator)
+
+    def find_elements(self, locator):
+        return self.driver.find_elements(*locator)
+
+    def click(self, locator):
+        self.find_element(locator).click()
+
+    def input_text(self, text, locator):
+        self.find_element(locator).send_keys(text)
+
+from selenium.webdriver.common.by import By
+from features.pages.base_page import Page
+
+class HomePage(Page):
+    SEARCH_BAR = (By.ID, "search")
+    CART_ICON = (By.ID, "utilityNav-cart")
+
+    def open(self):
+        self.open_url("https://www.target.com/")
+
+    def search_product(self, product):
+        self.input_text(product, self.SEARCH_BAR)
+        self.find_element(self.SEARCH_BAR).submit()
+
+    def go_to_cart(self):
+        self.click(self.CART_ICON)
+
+
+from selenium.webdriver.common.by import By
+from features.pages.base_page import Page
+
+class CartPage(Page):
+    EMPTY_CART_MESSAGE = (By.XPATH, "//*[contains(text(), 'Your cart is empty')]")
+
+    def is_empty_message_displayed(self):
+        return self.find_element(self.EMPTY_CART_MESSAGE).is_displayed()
+
+
+Feature: Cart page
+
+  Scenario: “Your cart is empty” message is shown for empty cart
+    Given I am on the Target homepage
+    When I go to the cart
+    Then I should see the empty cart message
+
+
+Feature: Product Search
+
+  Scenario: Search for a product on Target
+    Given I am on the Target homepage
+    When I search for "toothbrush"
+    Then I should see results related to "toothbrush"
+
+from behave import given, when, then
+from features.pages.home_page import HomePage
+from features.pages.cart_page import CartPage
+
+@given("I am on the Target homepage")
+def step_impl(context):
+    context.home = HomePage(context.browser)
+    context.home.open()
+
+@when("I go to the cart")
+def step_impl(context):
+    context.home.go_to_cart()
+    context.cart = CartPage(context.browser)
+
+@then("I should see the empty cart message")
+def step_impl(context):
+    assert context.cart.is_empty_message_displayed(), "Empty cart message was not displayed"
+
+from behave import given, when, then
+from features.pages.home_page import HomePage
+
+@given("I am on the Target homepage")
+def step_impl(context):
+    context.home = HomePage(context.browser)
+    context.home.open()
+
+@when('I search for "{product}"')
+def step_impl(context, product):
+    context.home.search_product(product)
+
+@then('I should see results related to "{product}"')
+def step_impl(context, product):
+    assert product.lower() in context.browser.page_source.lower()
+
+
+from selenium import webdriver
+
+def before_all(context):
+    context.browser = webdriver.Chrome()
+
+def after_all(context):
+    context.browser.quit()
+

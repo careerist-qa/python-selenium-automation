@@ -1,0 +1,55 @@
+
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from behave import given, when, then
+from selenium.webdriver.chrome.options import Options
+
+def before_all(context):
+    chrome_options = Options()
+    chrome_options.add_argument("--incognito")
+    context.driver = webdriver.Chrome(options=chrome_options)
+    context.driver.implicitly_wait(10)
+
+def after_all(context):
+    context.driver.quit()
+
+@given('the user opens the Target homepage')
+def step_open_homepage(context):
+    context.driver.get("https://www.target.com/")
+
+@when('the user clicks on the Cart icon')
+def step_click_cart_icon(context):
+    cart_icon = context.driver.find_element(By.XPATH, "//a[@data-test='@web/CartLink']")
+    cart_icon.click()
+
+@then('the user should see the "Your cart is empty" message')
+def step_verify_empty_cart(context):
+    empty_message = WebDriverWait(context.driver, 10).until(
+        EC.visibility_of_element_located((By.XPATH, "//div[contains(text(),'Your cart is empty')]"))
+    )
+    assert empty_message.is_displayed()
+
+@when('the user clicks on the Sign In menu')
+def step_click_signin_menu(context):
+    sign_in_menu = WebDriverWait(context.driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//span[text()='Sign in']"))
+    )
+    sign_in_menu.click()
+
+@when('the user clicks on Sign In from the side navigation')
+def step_click_signin_nav(context):
+    nav_signin = WebDriverWait(context.driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//a[@data-test='accountNav-signIn']"))
+    )
+    nav_signin.click()
+
+@then('the Sign In form should be visible')
+def step_verify_signin_form(context):
+    signin_header = WebDriverWait(context.driver, 10).until(
+        EC.visibility_of_element_located((By.XPATH, "//h1[contains(text(), 'Sign into your Target account')]"))
+    )
+    assert signin_header.is_displayed()
+
