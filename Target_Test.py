@@ -4,7 +4,6 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 
-from features.steps.product_search import click_search_icon
 
 # get the path to the ChromeDriver executable
 driver_path = ChromeDriverManager().install()
@@ -22,4 +21,13 @@ driver.find_element(By.XPATH, "//button[@data-test='accountNav-signIn']").click(
 sleep(5)
 driver.find_element(By.XPATH,"//h1[contains(.,'Sign in or create account')]")
 driver.find_element(By.ID,"login")
+
+
+
+
+
+
+
+
+
 
