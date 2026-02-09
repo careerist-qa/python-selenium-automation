@@ -1,0 +1,27 @@
+from sample_script import driver
+from selenium.webdriver.common.by import By
+
+# Amazon logo
+driver.find_element(By.XPATH, "//*[@aria-label='Amazon']")
+
+#Email field
+driver.find_element(By.XPATH, "//input[@class='a-input-text']")
+
+# Continue button, By ID
+driver.find_element(By.ID, 'continue-announce')
+
+# Conditions of use link
+driver.find_element(By.XPATH, "//a[text()= 'Conditions of Use']")
+
+# Privacy Notice link
+driver.find_element(By.XPATH, "//a[text()= 'Privacy Notice']")
+
+# Need help link
+driver.find_element(By.XPATH, "//a[@class='a-size-base a-link-normal']")
+
+# Create a free business account
+driver.find_element(By.XPATH, "//a[@class='a-link-normal']")
+
+
+
+
