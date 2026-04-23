@@ -1,33 +1,36 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
-from time import sleep
 
-# get the path to the ChromeDriver executable
-driver_path = ChromeDriverManager().install()
+# setup driver
+options = Options()
+options.add_argument("--start-maximized")
 
-# create a new Chrome browser instance
-service = Service(driver_path)
-driver = webdriver.Chrome(service=service)
-driver.maximize_window()
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service, options=options)
 
-# open the url
-driver.get('https://www.google.com/')
+# open Google
+driver.get("https://www.google.com")
 
-# populate search field
-search = driver.find_element(By.NAME, 'q')
-search.clear()
-search.send_keys('Car')
+wait = WebDriverWait(driver, 10)
 
-# wait for 4 sec
-sleep(4)
+# enter search text
+search_box = wait.until(EC.presence_of_element_located((By.NAME, "q")))
+search_box.clear()
+search_box.send_keys("Car")
 
-# click search button
-driver.find_element(By.NAME, 'btnK').click()
+# press Enter instead of clicking button (more reliable)
+search_box.submit()
 
-# verify search results
-assert 'car'.lower() in driver.current_url.lower(), f"Expected query not in {driver.current_url.lower()}"
-print('Test Passed')
+# wait for results page
+wait.until(EC.presence_of_element_located((By.ID, "search")))
+
+# validation
+assert "car" in driver.title.lower(), f"Expected 'car' in title, got {driver.title}"
+print("✅ Test Passed")
 
 driver.quit()
